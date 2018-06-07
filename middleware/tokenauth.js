@@ -13,10 +13,10 @@ uuidv1(v1options);
 
 console.log(uuidv1);
 */
+
 module.exports = {
-    //formHandler: function(req, res, next){...}
-    myLogger: function (req, res, next) {
-      console.log('LOGGED')
+    tokenAuth: function (req, res, next) {
+      console.log('Token Auth called')
       next()
     }
 } 
