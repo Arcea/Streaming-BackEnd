@@ -2,6 +2,8 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+let tokenauth = require('./middleware/tokenauth');
+let logger = require('./middleware/logger');
 var app = express();
 
 // view engine setup
@@ -14,6 +16,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(tokenauth);
+app.use(logger);
 
 const router = require('./router');
 app.use(router);
