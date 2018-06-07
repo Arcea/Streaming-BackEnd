@@ -16,8 +16,8 @@ router.use((error,req,res,next) => {
 
 router.get('*', (req, res) => {
     res.status(404).send({
-        message: '404 not found'
+        message: '404 not founds'
     }).end();
 });
 
-module.exports = router;
+module.exports = router; 

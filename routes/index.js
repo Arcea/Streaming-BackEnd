@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const routes = express.Router()
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const chatboxcontroller = require('../controllers/ctrl_auth')
 
-module.exports = router;
+routes.get('/', chatboxcontroller.getAll)
+
+module.exports = routes;
