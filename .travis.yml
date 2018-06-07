@@ -3,8 +3,9 @@ node_js:
   - "node"
   - "7"
 before_script:
-  - cd server
   - npm install chai chai-http mocha
   - npm install
 script: 
   - npm test
+after_success:
+ - npm run coveralls
