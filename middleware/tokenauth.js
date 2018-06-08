@@ -15,28 +15,26 @@ function tokenauth(req, res, next) {
     res.status(errors[1401].header).json(errors[1401]);
   } else {
     let token = req.headers.token;
-    // check if token is valid according to signed public key.
-
-    // Delete token from db
+    // Find token
     tokenModel.Tokens.findOne({ Token: token }, function(err, foundToken) {
-      if (err) {
-        return handleError(err);
+      if (err || foundToken == null || foundToken == undefined || foundToken == "") {
+        // handle error properly.
+        return res.json(errors[1401]);
       }
       else{
-        foundToken.remove();
-        console.log(foundToken);
-      }
-    });
+        // delete token
+        foundToken.remove(); 
+        // generate new token and add to db.
+        let newToken = tokenHelper.genToken();
+          newToken.save(function(err, newToken) {
+            if (err) return console.log(err);
+            console.log(newToken);
+          });
 
-    // generate new token and add to db.
-    let newToken = tokenHelper.genToken();
-    newToken.save(function(err, newToken) {
-      if (err) return console.log(err);
-      console.log(newToken);
+          res.setHeader("token", newToken.Token);
+          next();
+        }
     });
-
-    res.setHeader("token", newToken.Token);
-    next();
   }
 }
 
