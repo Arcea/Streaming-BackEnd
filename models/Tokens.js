@@ -1,7 +1,6 @@
 const mongoose = require('../config/db');
 
-const Schema = mongoose.Schema;
-const tokenSchema = new Schema({
+const tokenSchema = new mongoose.Schema({
     Token: {
         type: String,
         required: true,
@@ -18,4 +17,4 @@ const Tokens = mongoose.model('Tokens', tokenSchema);
 
 module.exports = {
     Tokens
-};
+};  

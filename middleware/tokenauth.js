@@ -4,17 +4,25 @@ let tokenModel = require("./../models/Tokens");
 
 function tokenauth(req, res, next) {
   if (req.url == "/login") {
-    let token = tokenHelper.genToken();
-    // Write token to db
+
+    let newToken = tokenHelper.genToken();
+    newToken.save(function (err, newToken){
+      if(err) return console.log(err);
+    });
+    
     res.status(200).json({
       token: token
     });
+
   } else if (req.headers.token == "" || req.headers.token == undefined) {
     res.status(errors[1401].header).json(errors[1401]);
   } else {
     let token = req.body.token;
     // check if token is valid according to signed public key.
+
     // Delete token from db
+
+    // generate new token and add to db.
     let newToken = tokenHelper.genToken();
     newToken.save(function (err, newToken){
       if(err) return console.log(err);
