@@ -26,7 +26,7 @@ function tokenauth(req, res, next) {
         return handleError(err);
       }
       else{
-        foundToken.delete();
+        foundToken.remove();
         console.log(foundToken);
       }
     });
