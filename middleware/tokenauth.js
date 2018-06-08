@@ -1,6 +1,6 @@
 let errors = require("./../libs/errorcodes");
 let tokenHelper = require("./../helpers/tokenHelper");
-let tokenModel = require("./../models/Tokens.js");
+let tokenModel = require("./../models/Tokens");
 
 function tokenauth(req, res, next) {
   if (req.url == "/login") {
