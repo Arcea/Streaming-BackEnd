@@ -24,7 +24,7 @@ function tokenauth(req, res, next) {
       if (err) return console.log(err);
     });
 
-    res.setHeader("token", newToken);
+    res.setHeader("token", newToken.Token);
     next();
   }
 }
