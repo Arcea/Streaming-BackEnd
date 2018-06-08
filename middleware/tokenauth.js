@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 let errors = require("./../libs/errorcodes");
 let tokenHelper = require("./../helpers/tokenHelper");
 
@@ -9,13 +8,16 @@ function tokenauth(req, res, next) {
     res.status(200).json({
       token: token
     });
-  } else if (req.body.token == "" || req.body.token == undefined) {
+  } else if (req.headers.token == "" || req.headers.token == undefined) {
+    console.log(req.headers.token);
     res.status(errors[1401].header).json(errors[1401]);
   } else {
     let token = req.body.token;
     //Delete token from db
-    let token = tokenHelper.genToken();
+    let newToken = tokenHelper.genToken();
     //Write new token to db
+    console.log(newToken);
+    res.setHeader("token", newToken);
     next();
   }
 }
