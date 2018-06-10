@@ -43,3 +43,5 @@ testem.log
 Thumbs.db
 .env
 .directory
+.DS_Store
+node_modules
