@@ -2,7 +2,7 @@
   "name": "backendbois",
   "version": "0.0.0",
   "description": "BestBackend",
-  "main": "router.js",
+  "main": "app.js",
   "private": true,
   "scripts": {
     "start": "node .",
