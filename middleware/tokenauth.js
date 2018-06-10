@@ -1,22 +1,41 @@
-/*
-var tokenauth;
+let errors = require("./../libs/errorcodes");
+let tokenHelper = require("./../helpers/tokenHelper");
+let tokenModel = require("./../models/Tokens");
 
-const uuidv1 = require('uuid/v1');
-const v1options = {
-    node: [0x01, 0x23, 0x45, 0x67, 0x89, 0xab],
-    clockseq: 0x1234,
-    msecs: new Date('2018-06-06').getTime(),
-    nsecs: 5678
-};
+function tokenauth(req, res, next) {
+  if (req.url == "/login") {
+    let newToken = tokenHelper.genToken();
+    newToken.save(function(err, newToken) {
+      if (err) return console.log(err);
+      console.log("Succesfully saved Token");
+    });
+    res.setHeader("token", newToken.Token);
+    res.status(200).send();
+  } else if (req.headers.token == "" || req.headers.token == undefined) {
+    res.status(errors[1401].header).json(errors[1401]);
+  } else {
+    let token = req.headers.token;
+    // Find token
+    tokenModel.Tokens.findOne({ Token: token }, function(err, foundToken) {
+      if (err || foundToken == null || foundToken == undefined || foundToken == "") {
+        // handle error properly.
+        return res.json(errors[1401]);
+      }
+      else{
+        // delete token
+        foundToken.remove(); 
+        // generate new token and add to db.
+        let newToken = tokenHelper.genToken();
+          newToken.save(function(err, newToken) {
+            if (err) return console.log(err);
+            console.log(newToken);
+          });
 
-uuidv1(v1options);
+          res.setHeader("token", newToken.Token);
+          next();
+        }
+    });
+  }
+}
 
-console.log(uuidv1);
-*/
-
-module.exports = {
-    tokenAuth: function (req, res, next) {
-      console.log('Token Auth called')
-      next()
-    }
-} 
+module.exports = tokenauth;
