@@ -1,7 +1,6 @@
 const mongoose = require('../config/db');
 
-const Schema = mongoose.Schema;
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     Name: {
         type: String,
         required: true,
@@ -11,6 +10,11 @@ const userSchema = new Schema({
         type: Number,
         required: true,
         minLength: 1
+    },
+    Transparant: {
+        type: Boolean,
+        required: true,
+        minlength: 1
     },
     PublicKey: {
         type: String,

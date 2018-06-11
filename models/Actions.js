@@ -1,8 +1,12 @@
 const mongoose = require('../config/db');
 
-const Schema = mongoose.Schema;
-const actionSchema = new Schema({
-    Action: {
+const actionSchema = new mongoose.Schema({
+    Method: {
+        type: String,
+        required: true,
+        minlength: 1
+    },
+    Url: {
         type: String,
         required: true,
         minlength: 1
@@ -12,8 +16,8 @@ const actionSchema = new Schema({
         required: true,
         minLength: 1
     },
-    Stream: {
-        type: Schema.Types.ObjectId,
+    User: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
         required: true,
     }

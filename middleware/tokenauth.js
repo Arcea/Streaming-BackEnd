@@ -10,7 +10,7 @@ function tokenauth(req, res, next) {
       console.log("Succesfully saved Token");
     });
     res.setHeader("token", newToken.Token);
-    res.status(200).send();
+    next();
   } else if (req.headers.token == "" || req.headers.token == undefined) {
     res.status(errors[1401].header).json(errors[1401]);
   } else {
@@ -29,7 +29,6 @@ function tokenauth(req, res, next) {
         let newToken = tokenHelper.genToken();
           newToken.save(function(err, newToken) {
             if (err) return console.log(err);
-            console.log(newToken);
           });
 
           res.setHeader("token", newToken.Token);
