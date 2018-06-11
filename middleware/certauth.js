@@ -19,13 +19,17 @@ function certauth(req, res, next) {
         console.log(err);
 
       fs.readFile(path.join(__dirname, '../keys', user.PublicKey), function (err, data) {
-        console.log(path.join(__dirname, '../keys', user.PublicKey));
-        let result = verify.verify(data, sign);
-        console.log("The result: " + result);
-        if (result) {
-          next();
-        } else {
-          res.status(errors[1402].header).json(errors[1402]);
+        try {
+          console.log(path.join(__dirname, '../keys', user.PublicKey));
+          let result = verify.verify(data, sign);
+          console.log("The result: " + result);
+          if (result) {
+            next();
+          } else {
+            res.status(errors[1402].header).json(errors[1402]);
+          }
+        } catch (error) {
+          return res.status(errors[1402].header).json(errors[1402]);
         }
       });
     });

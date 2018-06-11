@@ -11,7 +11,7 @@ var errors = {
   },
   1402: {
     errorCode: 1402,
-    message: "Data integrity cannot be verified",
+    message: "Authentication failed",
     header: 400
   }
 };
