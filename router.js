@@ -8,6 +8,15 @@ router.use("/auth", authRoutes);
 //const streamRoutes = require("./routes/stream");
 //router.use("/streams", streamRoutes);
 
+router.get("/login", (req, res) => {
+  res
+    .status(200)
+    .send({
+      message: "Page found"
+    })
+    .end();
+});
+
 //Catching all other requests
 router.get("*", (req, res) => {
   res
