@@ -19,7 +19,7 @@ function certauth(req, res, next) {
       if (err)
         console.log(err);
       try {
-        fs.readFile(path.join(__dirname, '../keys', user.PublicKey), function (err, data) {
+        fs.readFile(path.join(__dirname, '../keys', user.PublicKey), "utf8", function (err, data) {
           console.log(path.join(__dirname, '../keys', user.PublicKey));
           console.log(data);
           console.log(sign);
