@@ -20,6 +20,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minLength: 1
+    },
+
+    TransparentUser: {
+        type: Boolean,
+        required: true
+    },
+
+    Slogan: {
+        type: String,
+        required: false
     }
 });
 

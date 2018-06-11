@@ -20,8 +20,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 //Calling logger and authentication
-//app.use(certauth);
 app.use(cors())
+app.use(certauth);
 app.use(tokenauth);
 app.use(logger);
 
