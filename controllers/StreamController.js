@@ -14,16 +14,3 @@ module.exports = {
 		});
     }
 }
-/*
- ID: 0,
- viewers: 0,
- slogan: "This is an example slogan because I say so",
- title: "Wouter Jansen",
- imagesource:"/assets/img/otter1.jpg",
- imagealt:"Alttext that I don't want to write",
- messages: ["This is a message!",
- 			"I am a message too!",
- 			"Hello all!", "Kappa",
- 			"lmao",
- 			"1337 0773r"]},
-*/
