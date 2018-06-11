@@ -5,8 +5,8 @@ const router = express.Router();
 const authRoutes = require("./routes/auth");
 router.use("/auth", authRoutes);
 
-const streamRoutes = require("./routes/stream");
-router.use("/streams", streamRoutes);
+//const streamRoutes = require("./routes/stream");
+//router.use("/streams", streamRoutes);
 
 //Catching all other requests
 router.get("*", (req, res) => {

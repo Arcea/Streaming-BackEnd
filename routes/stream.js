@@ -1,3 +1,4 @@
+/*
 const express = require('express')
 const routes = express.Router()
 
@@ -9,3 +10,4 @@ routes.get('/', streamController.getStreams)
 //routes.delete('/:id', streamController.delete)
 
 module.exports = routes;
+*/
