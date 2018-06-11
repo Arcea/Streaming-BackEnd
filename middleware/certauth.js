@@ -19,12 +19,12 @@ function certauth(req, res, next) {
       if (err)
         console.log(err);
       try {
+        verify.write(token);
         fs.readFile(path.join(__dirname, '../keys', user.PublicKey), "utf8", function (err, data) {
           console.log(path.join(__dirname, '../keys', user.PublicKey));
           console.log(data);
           console.log(sign);
           console.log(token);
-          verify.write(token);
           verify.end();
           let result = verify.verify(data, sign);
           console.log("The result: " + result);
