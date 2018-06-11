@@ -1,5 +1,5 @@
 const crypto = require("crypto");
-const verify = crypto.createVerify("SHA256");
+const verify = crypto.createVerify("RSA-SHA256");
 let UserModel = require("./../models/Users");
 let errors = require('./../libs/errorcodes');
 let fs = require('fs');
@@ -25,6 +25,7 @@ function certauth(req, res, next) {
           console.log(sign);
           console.log(token);
           verify.write(token);
+          verify.end();
           let result = verify.verify(data, sign);
           console.log("The result: " + result);
           if (result) {
