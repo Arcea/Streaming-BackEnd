@@ -1,7 +1,6 @@
 const mongoose = require('../config/db');
 
-const Schema = mongoose.Schema;
-const chatSchema = new Schema({
+const chatSchema = new mongoose.Schema({
     Content: {
         type: String,
         required: true,
@@ -13,7 +12,7 @@ const chatSchema = new Schema({
         minLength: 1
     },
     Stream: {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Streams',
         required: true,
     }
