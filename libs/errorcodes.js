@@ -8,6 +8,11 @@ var errors = {
     errorCode: 1401,
     message: "Invalid token",
     header: 403
+  },
+  1402: {
+    errorCode: 1402,
+    message: "Data integrity cannot be verified",
+    header: 400
   }
 };
 
