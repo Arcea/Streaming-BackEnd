@@ -9,8 +9,9 @@ function certauth(req, res, next) {
   if (req.url == "/login") {
     next();
   } else {
-    let sign = req.headers.signature;
-    let name = req.headers.name;
+    let sign = req.body.signature;
+    let name = req.body.name;
+    let token = req.body.token;
 
     //console.log(req.connection.getPeerCertificate());
     //DB get pubkey by name;
@@ -19,10 +20,11 @@ function certauth(req, res, next) {
         console.log(err);
       try {
         fs.readFile(path.join(__dirname, '../keys', user.PublicKey), function (err, data) {
-
           console.log(path.join(__dirname, '../keys', user.PublicKey));
-          console.log(user.PublicKey);
+          console.log(data);
           console.log(sign);
+          console.log(token);
+          verify.write(token);
           let result = verify.verify(data, sign);
           console.log("The result: " + result);
           if (result) {
