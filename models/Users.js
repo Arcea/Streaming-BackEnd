@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         minLength: 1
     },
+    Transparant: {
+        type: Boolean,
+        required: true,
+        minlength: 1
+    },
     PublicKey: {
         type: String,
         required: true,
