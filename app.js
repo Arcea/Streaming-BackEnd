@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //Calling logger and authentication
 //app.use(certauth);
 app.use(tokenauth);
-app.use(logger.myLogger);
+app.use(logger);
 
 const router = require("./router");
 app.use(router);
