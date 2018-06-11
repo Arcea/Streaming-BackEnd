@@ -9,6 +9,7 @@ let certauth = require("./middleware/certauth");
 let logger = require("./middleware/logger");
 
 const mongoose = require("mongoose");
+const router = require("./router");
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
@@ -23,7 +24,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(tokenauth);
 app.use(logger);
 
-const router = require("./router");
 app.use(router);
 
 app.listen(process.env.PORT || 5000, () => {
