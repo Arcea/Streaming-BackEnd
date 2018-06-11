@@ -17,9 +17,9 @@ function certauth(req, res, next) {
     UserModel.Users.findOne({ "Name": name }, function (err, user) {
       if (err)
         console.log(err);
+      try {
+        fs.readFile(path.join(__dirname, '../keys', user.PublicKey), function (err, data) {
 
-      fs.readFile(path.join(__dirname, '../keys', user.PublicKey), function (err, data) {
-        try {
           console.log(path.join(__dirname, '../keys', user.PublicKey));
           console.log(user.PublicKey);
           console.log(sign);
@@ -30,10 +30,10 @@ function certauth(req, res, next) {
           } else {
             res.status(errors[1402].header).json(errors[1402]);
           }
-        } catch (error) {
-          return res.status(errors[1402].header).json(errors[1402]);
-        }
-      });
+        });
+      } catch (error) {
+        return res.status(errors[1402].header).json(errors[1402]);
+      }
     });
 
     // if (result) {
