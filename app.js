@@ -1,6 +1,7 @@
 var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
+var cors = require("cors");
 var app = express();
 
 //Our personal middleware functions
@@ -20,8 +21,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Calling logger and authentication
 //app.use(certauth);
-app.use(tokenauth);
-app.use(logger.myLogger);
+//app.use(tokenauth);
+//app.use(logger.myLogger);
+
+app.use(cors())
 
 const router = require("./router");
 app.use(router);

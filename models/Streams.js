@@ -1,7 +1,6 @@
 const mongoose = require('../config/db');
 
-const Schema = mongoose.Schema;
-const streamSchema = new Schema({
+const streamSchema = new mongoose.Schema({
     Date: {
         type: Date,
         required: true,
@@ -21,6 +20,4 @@ const streamSchema = new Schema({
 
 const Streams = mongoose.model('Streams', streamSchema);
 
-module.exports = {
-    Streams
-};
+module.exports = { Streams };
