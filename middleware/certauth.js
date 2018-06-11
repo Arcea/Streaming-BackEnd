@@ -21,6 +21,8 @@ function certauth(req, res, next) {
       fs.readFile(path.join(__dirname, '../keys', user.PublicKey), function (err, data) {
         try {
           console.log(path.join(__dirname, '../keys', user.PublicKey));
+          console.log(user.PublicKey);
+          console.log(sign);
           let result = verify.verify(data, sign);
           console.log("The result: " + result);
           if (result) {
