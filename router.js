@@ -17,9 +17,9 @@ router.get("/login", (req, res) => {
     .send()
     .end();
 });
-router.postget("/login", (req, res) => {
+router.get("/login", (req, res) => {
   res
-    .status(666)
+    .status(200)
     .send()
     .end();
 });
