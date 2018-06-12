@@ -20,4 +20,4 @@ const streamSchema = new mongoose.Schema({
 
 const Streams = mongoose.model('Streams', streamSchema);
 
-module.exports = Streams
+module.exports = Streams;
