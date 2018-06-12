@@ -1,7 +1,7 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
 const should = chai.should()
-const expect = chai.expect()
+const expect = chai.expect
 const app = require('../app')
 require('dotenv').config()
 
@@ -24,7 +24,7 @@ describe('Application running..', () =>{
                 res.should.have.status(200);
                 res.header.should.have.property('token');
                 savedToken = res.header.token;
-                console.log(savedToken);
+                console.log("TOKEN" + savedToken);
                 done();
         })
 	});
@@ -34,13 +34,22 @@ describe('Application running..', () =>{
 			.set('content-type', 'application/x-www-form-urlencoded')
 			.set('Authorization', 'bearer ' + savedToken)
 			.end(function (err, res){
-				console.log(res);
                 res.should.have.status(200);
-                res.header.should.have.property('token');
-                savedToken = res.header.token;
-                console.log(savedToken);
+                res.body.should.have.property("message");
+                expect(res.body).to.have.property('message', "Page found");
             done();
         })
 	});
-	//Should not be able to get x
+	it('should NOT be allowed to use the same token', function(done){
+		chai.request(app)
+			.get('/cheese')
+			.set('content-type', 'application/x-www-form-urlencoded')
+			.set('Authorization', 'bearer ' + savedToken)
+			.end(function (err, res){
+                res.should.have.status(403);
+                res.body.should.have.property("message");
+                expect(res.body).to.have.property('message', "Invalid token");
+            done();
+        })
+	});
 });
