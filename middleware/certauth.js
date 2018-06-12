@@ -9,9 +9,9 @@ function certauth(req, res, next) {
   if (req.url == "/login") {
     next();
   } else {
-    let sign = req.body.signature;
-    let name = req.body.name;
-    let token = req.body.token;
+    let sign = req.headers.signature;
+    let name = req.headers.name;
+    let token = req.headers.token;
 
     //console.log(req.connection.getPeerCertificate());
     //DB get pubkey by name;

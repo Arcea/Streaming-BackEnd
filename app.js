@@ -21,18 +21,18 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Calling logger and authentication
 app.use(cors())
-app.use(certauth);
+//app.use(certauth);
 app.use(tokenauth);
 app.use(logger);
 
 //Allow Origin
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", '*');
-    res.header("Access-Control-Allow-Credentials", true);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Expose-Headers', 'Token');
-    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json, Token');
-    next();
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", '*');
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Expose-Headers', 'Token');
+  res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json, Token');
+  next();
 });
 
 const router = require("./router");
