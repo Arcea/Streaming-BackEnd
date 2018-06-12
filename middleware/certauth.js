@@ -56,12 +56,8 @@ function auth(req, res, cb) {
       let cert = fs.readFileSync(path.join(__dirname, '../keys', user.PublicKey)).toString();
       try {
         console.log(path.join(__dirname, '../keys', user.PublicKey));
-        console.log(cert);
-        console.log(token);
-        console.log(sign);
         verify.update(token);
         let result = verify.verify(cert, sign, 'hex');
-        console.log("The result: " + result);
         cb(result);
       } catch (error) {
         console.log(error);
