@@ -25,6 +25,4 @@ const actionSchema = new mongoose.Schema({
 
 const Actions = mongoose.model('Actions', actionSchema);
 
-module.exports = {
-    Actions
-};
+module.exports = Actions;

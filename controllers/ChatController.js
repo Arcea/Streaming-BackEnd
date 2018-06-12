@@ -4,7 +4,7 @@ let userModel = require("./../models/Users");
 
 module.exports = {
     Chat(req, res, next) {
-        userModel.Users.findOne({ Name: req.headers.name }, function(err, foundUser) {
+        userModel.findOne({ Name: req.headers.name }, function(err, foundUser) {
             if (err || foundUser == null || foundUser == undefined || foundUser == "") {
               // handle error properly.
               return res.json(errors[1403]);

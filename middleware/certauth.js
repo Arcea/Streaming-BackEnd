@@ -16,7 +16,7 @@ function certauth(req, res, next) {
 
     //console.log(req.connection.getPeerCertificate());
     //DB get pubkey by name;
-    UserModel.Users.findOne({ "Name": name }, function (err, user) {
+    UserModel.findOne({ "Name": name }, function (err, user) {
       if (err)
         console.log(err);
       try {
