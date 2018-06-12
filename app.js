@@ -39,6 +39,7 @@ const router = require("./router");
 app.use(router);
 
 app.listen(process.env.PORT || 5000, () => {
+  if(!module.parent){ app.listen(port); }
   if (process.env.PORT !== undefined) {
     console.log("Server gestart op poort " + process.env.PORT);
   } else {

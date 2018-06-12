@@ -3,7 +3,7 @@ const chaiHttp = require('chai-http')
 const should = chai.should()
 const expect = chai.expect
 const app = require('../app')
-require('dotenv').config()
+const mongoose = require("mongoose");
 
 chai.use(chaiHttp)
 let savedToken;
@@ -24,7 +24,7 @@ describe('Application running..', () =>{
                 res.should.have.status(200);
                 res.header.should.have.property('token');
                 savedToken = res.header.token;
-                console.log("TOKEN" + savedToken);
+                console.log("TOKEN " + savedToken);
                 done();
         })
 	});
@@ -52,8 +52,10 @@ describe('Application running..', () =>{
             done();
         })
 	});
-	it('should CLOSE app', function(done){
-		process.exitCode = 1;
-		process.exit()
-	})
+});
+after(function (done) {
+     done();
+    mongoose.disconnect();
+    //process.exitCode = 1;
+    //process.exit()
 });
