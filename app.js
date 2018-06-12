@@ -39,7 +39,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-const router = require("./router");
 app.use(router);
 
 app.listen(process.env.PORT || 5000, () => {
