@@ -53,18 +53,21 @@ function auth(req, res, cb) {
       console.log(err);
     try {
       let verify = crypto.createVerify("RSA-SHA256");
-      fs.readFile(path.join(__dirname, '../keys', user.PublicKey), "utf8", function (err, data) {
-        try {
-          console.log(path.join(__dirname, '../keys', user.PublicKey));
-          verify.write(token);
-          let result = verify.verify(data, sign, 'hex');
-          console.log("The result: " + result);
-          cb(result);
-        } catch (error) {
-          console.log(error);
-          return res.status(errors[1402].header).json(errors[1402]);
-        }
-      });
+      let cert = fs.readFileSync(path.join(__dirname, '../keys', user.PublicKey)).toString();
+      try {
+        console.log(path.join(__dirname, '../keys', user.PublicKey));
+        console.log(cert);
+        console.log(token);
+        console.log(sign);
+        verify.update(token);
+        let result = verify.verify(cert, sign, 'hex');
+        console.log("The result: " + result);
+        cb(result);
+      } catch (error) {
+        console.log(error);
+        return res.status(errors[1402].header).json(errors[1402]);
+      }
+
     } catch (error) {
       console.log(error);
       return res.status(errors[1402].header).json(errors[1402]);
