@@ -4,7 +4,7 @@ let userModel = require("./../models/Users");
 function Logger(req, res, next) {
 
   // find user based on name in the header.
-  userModel.findOne({ Name: req.headers.Name }, function (err, foundUser) {
+  userModel.findOne({ Name: req.headers.name }, function (err, foundUser) {
     if (err || foundUser == null || foundUser == undefined || foundUser == "") {
       // handle error properly when user is not found.
       console.log("Couldnt log this user: " + err);

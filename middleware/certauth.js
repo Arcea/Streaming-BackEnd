@@ -6,10 +6,10 @@ let path = require('path');
 
 function certauth(req, res, next) {
   if (req.url == "/login" && req.method == "GET") {
-    if (req.headers.Token != null && req.headers.Token != "" && req.headers.Token != undefined) {
-      console.log(req.headers.Token);
+    if (req.headers.token != null && req.headers.token != "" && req.headers.token != undefined) {
+      console.log(req.headers.token);
       console.log("0");
-      if ((req.headers.Name != null || req.headers.Name != undefined) && (req.headers.Signature != null || req.headers.Signature != undefined || req.headers.Signature != "")) {
+      if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
         auth(req, res, function (bool) {
           console.log("1");
           if (bool) {
@@ -27,10 +27,10 @@ function certauth(req, res, next) {
     }
   } else {
     console.log("3");
-    console.log(req.headers.Name, req.headers.Token, req.headers.Signature);
+    console.log(req.headers.name, req.headers.token, req.headers.signature);
     console.log(req.headers.name, req.headers.token, req.headers.signature);
     //console.log(res);
-    if ((req.headers.Name != null || req.headers.Name != undefined) && (req.headers.Signature != null || req.headers.Signature != undefined || req.headers.Signature != "")) {
+    if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
       console.log("Got in if");
       auth(req, res, function (bool) {
         if (bool) {
@@ -47,9 +47,9 @@ function certauth(req, res, next) {
 }
 
 function auth(req, res, cb) {
-  let sign = req.headers.Signature;
-  let name = req.headers.Name;
-  let token = req.headers.Token;
+  let sign = req.headers.signature;
+  let name = req.headers.name;
+  let token = req.headers.token;
 
   //console.log(req.connection.getPeerCertificate());
   //DB get pubkey by name;
