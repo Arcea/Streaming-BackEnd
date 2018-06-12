@@ -16,6 +16,7 @@ function tokenauth(req, res, next) {
   } else {
     let token = req.headers.token;
     // Find token
+    console.log("Finding token....")
     tokenModel.Tokens.findOne({ Token: token }, function(err, foundToken) {
       if (err || foundToken == null || foundToken == undefined || foundToken == "") {
         // handle error properly.
