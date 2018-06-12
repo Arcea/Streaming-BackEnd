@@ -6,7 +6,7 @@ let path = require('path');
 
 function certauth(req, res, next) {
   if (req.url == "/login" && req.method == "GET") {
-    if (req.headers.token != null && req.headers.token != "") {
+    if (req.headers.token != null && req.headers.token != "" && req.headers.token != undefined) {
       console.log(req.headers.token);
       console.log("0");
       if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
