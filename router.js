@@ -5,8 +5,8 @@ const router = express.Router();
 const authRoutes = require("./routes/auth");
 router.use("/auth", authRoutes);
 
-//const streamRoutes = require("./routes/stream");
-//router.use("/streams", streamRoutes);
+const streamRoutes = require("./routes/stream");
+router.use("/streams", streamRoutes);
 
 router.get("/login", (req, res) => {
   res
@@ -15,6 +15,15 @@ router.get("/login", (req, res) => {
       message: "Page found"
     })
     .end();
+});
+
+router.use((error,req,res,next) => {
+  res.status(error.status || 500).send({
+        message: error.message,
+        code: error.code,
+        name: error.name,
+        status: error.status
+  }).end();
 });
 
 //Catching all other requests
