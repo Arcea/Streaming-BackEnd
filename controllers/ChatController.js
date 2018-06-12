@@ -31,15 +31,19 @@ module.exports = {
         });
     },
     GetStreamChat(req, res, next) {
-        chatModel.Chats.find({ Stream: req.params.id }, function(err, foundChat) {
-            if (err || foundChat == null || foundChat == undefined || foundChat == "") {
-                if(err){ console.log(err) }
-                // handle error properly.
-                return res.json("No chats found");
-            }
-            else{
-                res.json(foundChat);
-            }
-        });
+        chatModel
+            .find({ Stream: req.params.id })
+            .then((foundChat, err) => {
+                if (err || foundChat === null || foundChat === undefined || foundChat === "") {
+                    if(err) throw err
+                    return res.json("No chats found");
+                } else {
+                    res.status(200).json(foundChat);
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        ;
     }
 }
