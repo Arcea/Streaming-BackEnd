@@ -8,7 +8,7 @@ let path = require('path');
 function certauth(req, res, next) {
   if (req.url == "/login") {
     next();
-  } else {
+  } else if (req.url == "/") {
     let sign = req.headers.signature;
     let name = req.headers.name;
     let token = req.headers.token;
@@ -44,6 +44,8 @@ function certauth(req, res, next) {
     // } else {
     //   //Some error
     // }
+  } else {
+    next();
   }
 }
 module.exports = certauth;
