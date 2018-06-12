@@ -27,11 +27,11 @@ function certauth(req, res, next) {
           console.log(sign);
           console.log(token);
           //console.log(decipher.write(sign, 'hex'));
-          let decrypted = decipher.update(sign, 'hex', 'ucs2');
+          //let decrypted = decipher.update(sign, 'hex', 'ucs2');
           //decrypted += decipher.final('ucs2')
-          console.log(decrypted);
+          //console.log(decrypted);
           //verify.end();
-          let result = verify.verify(data, sign);
+          let result = verify.verify(data, sign, 'hex');
           console.log("The result: " + result);
           if (result) {
             next();
