@@ -56,7 +56,7 @@ function auth(req, res, cb) {
       fs.readFile(path.join(__dirname, '../keys', user.PublicKey), "utf8", function (err, data) {
         try {
           console.log(path.join(__dirname, '../keys', user.PublicKey));
-          verify.update(token);
+          verify.write(token);
           let result = verify.verify(data, sign, 'hex');
           console.log("The result: " + result);
           cb(result);
