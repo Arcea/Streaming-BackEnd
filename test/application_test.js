@@ -53,6 +53,7 @@ describe('Application running..', () =>{
         })
 	});
 	it('should CLOSE app', function(done){
+		process.exitCode = 1;
 		process.exit()
 	})
 });
