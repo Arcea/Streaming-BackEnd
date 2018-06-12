@@ -52,4 +52,7 @@ describe('Application running..', () =>{
             done();
         })
 	});
+	it('should CLOSE app', function(done){
+		process.exit()
+	})
 });

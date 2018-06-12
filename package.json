@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node .",
     "test": "node node_modules/mocha/bin/_mocha ./test/*test.js --reporter spec --exit",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha",
+    "cover": "istanbul cover node_modules/mocha/bin/_mocha --exit",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "startmon": "nodemon ."
   },
