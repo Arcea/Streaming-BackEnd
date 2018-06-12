@@ -1,6 +1,7 @@
 var db = require('../config/db');
 let chatModel = require("./../models/Chats");
 let userModel = require("./../models/Users");
+let errors = require("./../libs/errorcodes");
 
 module.exports = {
     Chat(req, res, next) {
