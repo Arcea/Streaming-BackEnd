@@ -9,7 +9,7 @@ module.exports = {
 					res.status(200).json(streams)
 				})
 				.catch((err) => {
-					next()
+					next(err)
 				})
 			}
 }
