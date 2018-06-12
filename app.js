@@ -10,6 +10,9 @@ let logger = require("./middleware/logger");
 
 const mongoose = require("mongoose");
 const router = require("./router");
+const schedule = require("node-schedule");
+
+let tokenModel = require("./models/Tokens");
 
 // view engine setup
 //app.set('views', path.join(__dirname, 'views'));
@@ -33,5 +36,15 @@ app.listen(process.env.PORT || 5000, () => {
     console.log("Server gestart op poort 5000");
   }
 });
+
+// job every 5 minute  to clear out tokens.
+var j = schedule.scheduleJob('* 15 * * * *', function(){
+  tokenModel.Tokens.find({ ExpirationDate: { $lt: Date.now() }}, function(err, foundTokens) {
+    if(err){ console.log(err); }
+
+    foundTokens.forEach(t => t.remove())
+  });
+});
+
 
 module.exports = app;

@@ -1,11 +1,12 @@
 let uuid = require("uuid/v4");
 let Tokens = require("./../models/Tokens");
+let moment = require("moment");
 
 module.exports = {
   genToken: function() {
     return new Tokens.Tokens({
       Token: uuid(),
-      ExpirationDate: Date.now() // TODO: change this.
+      ExpirationDate: moment(Date.now()).add(15, 'm').toDate()
     });
   }
 };

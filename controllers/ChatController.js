@@ -1,4 +1,4 @@
-var db = require('../config/dbConnection');
+var db = require('../config/db');
 let chatModel = require("./../models/Chats");
 
 module.exports = {
@@ -10,12 +10,18 @@ module.exports = {
         });
 
         chatMessage.save(function(err, newChat) {
-            if (err) return console.log(err);
+            if (err){ 
+                return console.log(err);
+            } else{
+                res.status(200).json("Send message");
+            }
         });
+
     },
     GetStreamChat(req, res, next) {
-        chatModel.Chats.find({ Stream: req.headers.streamid }, function(err, foundChat) {
+        chatModel.Chats.find({ Stream: req.params.id }, function(err, foundChat) {
             if (err || foundChat == null || foundChat == undefined || foundChat == "") {
+                if(err){ console.log(err) }
                 // handle error properly.
                 return res.json("No chats found");
             }
