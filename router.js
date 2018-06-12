@@ -14,18 +14,22 @@ router.use("/streams", streamRoutes);
 router.get("/login", (req, res) => {
   res
     .status(200)
-    .send({
-      message: "Page found"
-    })
+    .send()
+    .end();
+});
+router.postget("/login", (req, res) => {
+  res
+    .status(666)
+    .send()
     .end();
 });
 
-router.use((error,req,res,next) => {
+router.use((error, req, res, next) => {
   res.status(error.status || 500).send({
-        message: error.message,
-        code: error.code,
-        name: error.name,
-        status: error.status
+    message: error.message,
+    code: error.code,
+    name: error.name,
+    status: error.status
   }).end();
 });
 
