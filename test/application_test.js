@@ -9,4 +9,8 @@ describe('Application running..', () =>{
 	it('should GET / ', function(done){
 		done();
 	});
+	it('should connect to DB', function(done){
+		done();
+	});
+	//Should not be able to get x
 });
