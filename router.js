@@ -4,11 +4,11 @@ const router = express.Router();
 //Declare any routes here.
 
 const chatRoutes = require("./routes/chat_routes.js");
-const authRoutes = require("./routes/auth");
-router.use("/auth", authRoutes);
-router.use(chatRoutes);
+const authRoutes = require("./routes/auth_routes.js");
+const streamRoutes = require("./routes/stream_routes.js");
 
-const streamRoutes = require("./routes/stream");
+router.use("/auth", authRoutes);
+router.use("/chat", chatRoutes);
 router.use("/streams", streamRoutes);
 
 router.get("/login", (req, res) => {
