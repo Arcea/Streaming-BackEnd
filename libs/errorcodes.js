@@ -8,6 +8,11 @@ var errors = {
     errorCode: 1401,
     message: "Invalid token",
     header: 403
+  },
+  1403: {
+    errorCode: 1403,
+    message: "Invalid user",
+    header: 403
   }
 };
 

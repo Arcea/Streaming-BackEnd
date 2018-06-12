@@ -4,7 +4,7 @@ var chatController = require('../controllers/ChatController');
 
 module.exports = {}
 
-routes.post('/chat', chatController.Chat);
+routes.post('/chat/:id', chatController.Chat);
 routes.get('/chat/:id', chatController.GetStreamChat);
 
 module.exports = routes;
