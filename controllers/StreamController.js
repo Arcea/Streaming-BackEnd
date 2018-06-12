@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Streams = require("./../models/streams");
+const Streams = require("./../models/Streams");
 
 module.exports = {
 	getStreams(req, res, next) {
