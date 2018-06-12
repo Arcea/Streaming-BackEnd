@@ -28,7 +28,8 @@ function certauth(req, res, next) {
   } else {
     console.log("3");
     console.log(req.headers.Name, req.headers.Token, req.headers.Signature);
-    console.log(res);
+    console.log(req.headers.name, req.headers.token, req.headers.signature);
+    //console.log(res);
     if ((req.headers.Name != null || req.headers.Name != undefined) && (req.headers.Signature != null || req.headers.Signature != undefined || req.headers.Signature != "")) {
       console.log("Got in if");
       auth(req, res, function (bool) {
