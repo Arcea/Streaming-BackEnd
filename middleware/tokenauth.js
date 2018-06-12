@@ -9,6 +9,7 @@ function tokenauth(req, res, next) {
       if (err) return console.log(err);
       console.log("Succesfully saved Token");
     });
+    console.log(newToken.Token);
     res.setHeader("token", newToken.Token);
     next();
   } else if (req.headers.token == "" || req.headers.token == undefined) {
@@ -32,6 +33,7 @@ function tokenauth(req, res, next) {
           if (err) return console.log(err);
         });
 
+        console.log(newToken.Token);
         res.setHeader("token", newToken.Token);
         next();
       }
