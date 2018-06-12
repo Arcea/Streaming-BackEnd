@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const verify = crypto.createVerify("RSA-SHA256");
-const decipher = crypto.createDecipher('hex', 'test');
+const decipher = crypto.createDecipher('aes-256-cbc', 'test');
 let UserModel = require("./../models/Users");
 let errors = require('./../libs/errorcodes');
 let fs = require('fs');
