@@ -9,13 +9,13 @@ function tokenauth(req, res, next) {
       if (err) return console.log(err);
       console.log("Succesfully saved Token");
     });
-    res.setHeader("token", newToken.Token);
+    res.setHeader("Token", newToken.Token);
     next();
-  } else if (req.headers.token == "" || req.headers.token == undefined) {
+  } else if (req.headers.Token == "" || req.headers.Token == undefined) {
     console.log("no token");
     res.status(errors[1401].header).json(errors[1401]);
   } else {
-    let token = req.headers.token;
+    let token = req.headers.Token;
     // Find token
     console.log("Finding token....")
     tokenModel.findOne({ Token: token }, function (err, foundToken) {
@@ -31,7 +31,7 @@ function tokenauth(req, res, next) {
         newToken.save(function (err, newToken) {
           if (err) return console.log(err);
         });
-        res.setHeader("token", newToken.Token);
+        res.setHeader("Token", newToken.Token);
         next();
       }
     });
