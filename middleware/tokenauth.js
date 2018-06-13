@@ -5,35 +5,35 @@ let tokenModel = require("./../models/Tokens");
 function tokenauth(req, res, next) {
   if (req.url == "/login") {
     let newToken = tokenHelper.genToken();
-    newToken.save(function(err, newToken) {
+    newToken.save(function (err, newToken) {
       if (err) return console.log(err);
       console.log("Succesfully saved Token");
     });
-    res.setHeader("token", newToken.Token);
+    res.setHeader("Token", newToken.Token);
     next();
   } else if (req.headers.token == "" || req.headers.token == undefined) {
+    console.log("no token");
     res.status(errors[1401].header).json(errors[1401]);
   } else {
     let token = req.headers.token;
     // Find token
     console.log("Finding token....")
-    tokenModel.findOne({ Token: token }, function(err, foundToken) {
+    tokenModel.findOne({ Token: token }, function (err, foundToken) {
       if (err || foundToken == null || foundToken == undefined || foundToken == "") {
-        // handle error properly.
+        console.log("token does not exist");
         return res.json(errors[1401]);
       }
-      else{
+      else {
         // delete token
-        foundToken.remove(); 
+        foundToken.remove();
         // generate new token and add to db.
         let newToken = tokenHelper.genToken();
-          newToken.save(function(err, newToken) {
-            if (err) return console.log(err);
-          });
-
-          res.setHeader("token", newToken.Token);
-          next();
-        }
+        newToken.save(function (err, newToken) {
+          if (err) return console.log(err);
+        });
+        res.setHeader("Token", newToken.Token);
+        next();
+      }
     });
   }
 }

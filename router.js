@@ -16,18 +16,22 @@ router.use("/user", userRoutes);
 router.get("/login", (req, res) => {
   res
     .status(200)
-    .send({
-      message: "Page found"
-    })
+    .send()
+    .end();
+});
+router.get("/login", (req, res) => {
+  res
+    .status(200)
+    .send()
     .end();
 });
 
-router.use((error,req,res,next) => {
+router.use((error, req, res, next) => {
   res.status(error.status || 500).send({
-        message: error.message,
-        code: error.code,
-        name: error.name,
-        status: error.status
+    message: error.message,
+    code: error.code,
+    name: error.name,
+    status: error.status
   }).end();
 });
 

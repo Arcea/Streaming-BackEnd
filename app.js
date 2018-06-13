@@ -53,7 +53,6 @@ app.listen(process.env.PORT || 5000, () => {
 var j = schedule.scheduleJob('* 15 * * * *', function(){
   tokenModel.find({ ExpirationDate: { $lt: Date.now() }}, function(err, foundTokens) {
     if(err){ console.log(err); }
-
     foundTokens.forEach(t => t.remove())
   });
 });
