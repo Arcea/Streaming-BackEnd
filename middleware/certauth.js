@@ -64,6 +64,8 @@ function auth(req, res, cb) {
         console.log(token);
         verify.update(token);
         let result = verify.verify(cert, sign, 'hex');
+        console.log("RESULT INCUMMING");
+        console.log(result);
         cb(result);
       } catch (error) {
         console.log(error);
