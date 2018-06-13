@@ -26,7 +26,7 @@ module.exports = {
             .then((foundUser, err) => {
                 if (err || foundUser === null || foundUser === undefined || foundUser === "") {
                     if(err) throw err
-                    res.json("No users found");
+                    res.status(errors[1403].header).json(errors[1403]);
                 } else {
                     updateData = {
                         Avatar: req.body.avatar,
