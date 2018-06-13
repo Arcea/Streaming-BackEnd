@@ -30,7 +30,18 @@ const userSchema = new mongoose.Schema({
     Slogan: {
         type: String,
         required: false
-    }
+    },
+
+    Avatar: {
+        type: String,
+        required: false
+    },
+
+    Streams: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Streams",
+        required: false,
+    }]
 });
 
 const Users = mongoose.model('Users', userSchema);

@@ -15,6 +15,11 @@ const streamSchema = new mongoose.Schema({
         type: Number,
         required: true,
         minLength: 1
+    },
+    User: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Users",
+        required: true,
     }
 });
 

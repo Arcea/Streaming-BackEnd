@@ -4,6 +4,7 @@ const Streams = require("./../models/Streams");
 module.exports = {
 	getStreams(req, res, next) {
 		Streams.find()
+			.populate("User")
 			.then((streams, err) => {
 				if (err) throw err;
 				res.status(200).json(streams)
