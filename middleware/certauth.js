@@ -63,11 +63,7 @@ function auth(req, res, cb) {
         console.log(path.join(__dirname, '../keys', user.PublicKey));
         console.log(token);
         verify.update(token);
-        cert = cert.toString();
-        sign = sign.toString();
         let result = verify.verify(cert, sign, 'hex');
-        console.log("RESULT INCUMMING");
-        console.log(result);
         cb(result);
       } catch (error) {
         console.log(error);
