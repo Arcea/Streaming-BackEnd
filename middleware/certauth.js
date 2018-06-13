@@ -1,57 +1,83 @@
 const crypto = require("crypto");
-const verify = crypto.createVerify("RSA-SHA256");
-const decipher = crypto.createDecipher('aes-256-cbc', 'test');
 let UserModel = require("./../models/Users");
 let errors = require('./../libs/errorcodes');
 let fs = require('fs');
 let path = require('path');
 
 function certauth(req, res, next) {
-  if (req.url == "/login") {
-    next();
-  } else if (req.url == "/") {
-    let sign = req.headers.signature;
-    let name = req.headers.name;
-    let token = req.headers.token;
-
-    //console.log(req.connection.getPeerCertificate());
-    //DB get pubkey by name;
-    UserModel.findOne({ "Name": name }, function (err, user) {
-      if (err)
-        console.log(err);
-      try {
-        //verify.write(token);
-        fs.readFile(path.join(__dirname, '../keys', user.PublicKey), "utf8", function (err, data) {
-          console.log(path.join(__dirname, '../keys', user.PublicKey));
-          console.log(data);
-          console.log(sign);
-          console.log(token);
-          //console.log(decipher.write(sign, 'hex'));
-          //let decrypted = decipher.update(sign, 'hex', 'ucs2');
-          //decrypted += decipher.final('ucs2')
-          console.log(decrypted);
-          verify.update(token);
-          //verify.end();
-          let result = verify.verify(data, sign, 'hex');
-          console.log("The result: " + result);
-          if (result) {
+  if (req.url == "/login" && req.method == "GET") {
+    if (req.headers.token != null && req.headers.token != "" && req.headers.token != undefined) {
+      console.log(req.headers.token);
+      console.log("0");
+      if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
+        auth(req, res, function (bool) {
+          console.log("1");
+          if (bool) {
             next();
           } else {
             res.status(errors[1402].header).json(errors[1402]);
           }
         });
-      } catch (error) {
-        return res.status(errors[1402].header).json(errors[1402]);
+      } else {
+        res.status(errors[1402].header).json(errors[1402]);
       }
-    });
-
-    // if (result) {
-    //   next();
-    // } else {
-    //   //Some error
-    // }
+    } else {
+      console.log("2");
+      next();
+    }
   } else {
-    next();
+    console.log("3");
+    console.log(req.headers.name, req.headers.token, req.headers.signature);
+    console.log(req.headers.name, req.headers.token, req.headers.signature);
+    //console.log(res);
+    if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
+      console.log("Got in if");
+      auth(req, res, function (bool) {
+        if (bool) {
+          next()
+        } else {
+          res.status(errors[1402].header).json(errors[1402]);
+        }
+      });
+    } else {
+      console.log("got in else");
+      res.status(errors[1402].header).json(errors[1402]);
+    }
   }
 }
+
+function auth(req, res, cb) {
+  let sign = req.headers.signature;
+  let name = req.headers.name;
+  let token = req.headers.token;
+
+  //console.log(req.connection.getPeerCertificate());
+  //DB get pubkey by name;
+  UserModel.findOne({ "Name": name }, function (err, user) {
+    if (err)
+      console.log(err);
+    try {
+      let verify = crypto.createVerify("RSA-SHA256");
+      let cert = fs.readFileSync(path.join(__dirname, '../keys', user.PublicKey)).toString();
+      try {
+        console.log(path.join(__dirname, '../keys', user.PublicKey));
+        console.log(token);
+        verify.update(token);
+        cert = cert.toString();
+        sign = sign.toString();
+        let result = verify.verify(cert, sign, 'hex');
+        console.log(result);
+        cb(result);
+      } catch (error) {
+        console.log(error);
+        return res.status(errors[1402].header).json(errors[1402]);
+      }
+
+    } catch (error) {
+      console.log(error);
+      return res.status(errors[1402].header).json(errors[1402]);
+    }
+  });
+}
+
 module.exports = certauth;
