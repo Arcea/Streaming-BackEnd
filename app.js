@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //Calling logger and authentication
 app.use(cors())
-//app.use(certauth);
+app.use(certauth);
 app.use(tokenauth);
 app.use(logger);
 
