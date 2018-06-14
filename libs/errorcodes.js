@@ -23,6 +23,12 @@ var errors = {
     errorCode: 1403,
     message: "Invalid user",
     header: 401
+  },
+
+  1501: {
+    errorCode: 1501,
+    message: "Cannot find in database",
+    header: 500
   }
 };
 
