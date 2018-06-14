@@ -49,7 +49,7 @@ app.listen(process.env.PORT || 5000, () => {
   }
 });
 
-// job every 5 minute  to clear out tokens.
+// job every 15 minute  to clear out tokens.
 var j = schedule.scheduleJob('* 15 * * * *', function(){
   tokenModel.find({ ExpirationDate: { $lt: Date.now() }}, function(err, foundTokens) {
     if(err){ console.log(err); }
