@@ -12,13 +12,18 @@ module.exports = {
             }
             else {
                 console.log(foundUser);
+                console.log(req.body);
+                try {
+                    let chatMessage = new chatModel({
+                        Content: req.body.content,
+                        Date: Date.now(),
+                        Stream: req.params.id,
+                        User: foundUser._id
+                    });  
+                } catch (err) {
+                    res.status(errors[1601].header).json(errors[1601]);
+                }
 
-                let chatMessage = new chatModel({
-                    Content: req.body.content,
-                    Date: Date.now(),
-                    Stream: req.params.id,
-                    User: foundUser._id
-                });
 
                 chatMessage.save(function (err, newChat) {
                     if (err) {

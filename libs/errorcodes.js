@@ -24,12 +24,16 @@ var errors = {
     message: "Invalid user",
     header: 401
   },
-
   1501: {
     errorCode: 1501,
     message: "Cannot find in database",
     header: 500
-  }
+  },
+  1601: {
+    errorCode: 1601,
+    message: "Invalid content",
+    header: 400
+  },
 };
 
 module.exports = errors;
