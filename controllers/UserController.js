@@ -20,7 +20,29 @@ module.exports = {
                 console.log(err)
             });
     },
-    Change(req, res, next) {
-        res.status(200).json("Find the programmer named Thijmen and ask him to make this");
+    Update(req, res, next) {
+        userModel
+            .findOne({ Name: req.headers.name })
+            .then((foundUser, err) => {
+                if (err || foundUser === null || foundUser === undefined || foundUser === "") {
+                    if(err) throw err
+                    res.status(errors[1403].header).json(errors[1403]);
+                } else {
+                    updateData = {
+                        Avatar: req.body.avatar,
+                        Slogan: req.body.slogan
+                    }
+                    foundUser.update(updateData, function(err, affected){
+                        if(err){ 
+                            res.status(errors[1402].header).json(errors[1402])
+                        } else{
+                            res.status(200).json("Succesfully updated");
+                        }
+                    });
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            });
     }
 }

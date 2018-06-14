@@ -14,5 +14,16 @@ module.exports = {
 				console.log(err);
 				res.status(errors[1501].header).json(errors[1501]);
 			})
+	},
+	GetOne(req, res, next){
+		Streams.findOne({ _id: req.params.id }).select("-__v")
+			.populate("User", "-Streams")
+			.then((stream, err) => {
+				if(err) throw err;
+				res.status(200).json(stream)
+			})
+			.catch((err) => {
+				next(err)
+			})
 	}
 }
