@@ -21,6 +21,7 @@ function tokenauth(req, res, next) {
     tokenModel.findOne({ Token: token }, function (err, foundToken) {
       if (err || foundToken == null || foundToken == undefined || foundToken == "") {
         console.log("token does not exist");
+        console.log("token: " + token);
         return res.json(errors[1401]);
       }
       else {
