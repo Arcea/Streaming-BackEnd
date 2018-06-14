@@ -3,6 +3,8 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var cors = require("cors");
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
 //Our personal middleware functions
 let tokenauth = require("./middleware/tokenauth.js");

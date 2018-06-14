@@ -1,7 +1,6 @@
 var db = require('../config/db');
 let chatModel = require("./../models/Chats");
 let userModel = require("./../models/Users");
-let errors = require("./../libs/errorcodes");
 
 module.exports = {
     Chat(req, res, next) {
@@ -23,15 +22,18 @@ module.exports = {
                 } catch (err) {
                     res.status(errors[1601].header).json(errors[1601]);
                 }
-
-
-                chatMessage.save(function (err, newChat) {
-                    if (err) {
+        
+                chatMessage.save(function(err, newChat) {
+                    if (err){ 
                         return console.log(err);
                     } else {
                         res.status(200).json("Message sent");
                     }
                 });
+
+                io.to(req.params.id).emit(chatMessage);
+                console.log("Emitted message: " + chatMessage.content);
+                console.log("Room: " + req.params.id);
             }
         });
     },
@@ -50,6 +52,6 @@ module.exports = {
             .catch(err => {
                 console.log(err)
             })
-            ;
+        ;
     }
 }
