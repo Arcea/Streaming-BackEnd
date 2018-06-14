@@ -50,7 +50,13 @@ module.exports = {
                     res.status(200).json(foundChat);
                 }
             })
-1 file change in working directory
-View change
-commit:9a47cc
-Logging messages
+            .catch(err => {
+                console.log(err)
+            });
+            
+            io.on('connection', function(socket){
+                console.log("Joined room: " + req.params.id);
+                socket.join(req.params.id);
+            });
+    }
+}
