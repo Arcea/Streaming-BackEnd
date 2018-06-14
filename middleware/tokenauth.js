@@ -22,7 +22,7 @@ function tokenauth(req, res, next) {
       if (err || foundToken == null || foundToken == undefined || foundToken == "") {
         console.log("token does not exist");
         console.log("token: " + token);
-        return res.json(errors[1401]);
+        return res.status(errors[1401].header).json(errors[1401]);
       }
       else {
         // delete token
