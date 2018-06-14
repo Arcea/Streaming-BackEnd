@@ -10,7 +10,7 @@ function Logger(req, res, next) {
       console.log("Couldnt log this user: " + err);
     }
     else {
-      let action = new actionModel.Actions({
+      let action = new actionModel({
         Method: req.method,
         Url: req.url,
         Date: Date.now(),
