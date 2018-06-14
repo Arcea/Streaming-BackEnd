@@ -19,12 +19,6 @@ module.exports = {
                 console.log("===================REQ=====================");
                 console.log(req);
                 console.log("============================================");
-                console.log("===================RES====================");
-                console.log(res);
-                console.log("============================================");
-                console.log("===================RES BODY====================");
-                console.log(res.body);
-                console.log("============================================");
                 try {
                     let chatMessage = new chatModel({
                         Content: req.body.content,
