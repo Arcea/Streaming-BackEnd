@@ -13,7 +13,9 @@ module.exports = {
             }
             else{
                 console.log(foundUser);
+                console.log("============================================");
                 console.log(req.body);
+                console.log("============================================");
                 try {
                     let chatMessage = new chatModel({
                         Content: req.body.content,
