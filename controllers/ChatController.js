@@ -13,7 +13,7 @@ module.exports = {
             else {
                 console.log(foundUser);
 
-                let chatMessage = new chatModel.Chats({
+                let chatMessage = new chatModel({
                     Content: req.body.content,
                     Date: Date.now(),
                     Stream: req.params.id,
