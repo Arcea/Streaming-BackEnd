@@ -33,6 +33,7 @@ module.exports = {
     GetStreamChat(req, res, next) {
         chatModel
             .find({ Stream: req.params.id })
+            .populate("User")
             .then((foundChat, err) => {
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     if (err) throw err
