@@ -29,6 +29,8 @@ module.exports = {
                 });
 
                 io.to(req.params.id).emit(chatMessage);
+                console.log("Emitted message: " + chatMessage.content);
+                console.log("Room: " + req.params.id);
             }
         });
     },
@@ -45,6 +47,11 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err)
-            });   
+            });
+            
+            io.on('connection', function(socket){
+                console.log("Joined room: " + req.params.id);
+                socket.join(req.params.id);
+            });
     }
 }
