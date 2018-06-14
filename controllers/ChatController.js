@@ -12,13 +12,6 @@ module.exports = {
               return res.json(errors[1403]);
             }
             else{
-                console.log(foundUser);
-                console.log("===================REQ BODY=====================");
-                console.log(req.body);
-                console.log("============================================");
-                console.log("===================REQ=====================");
-                console.log(req);
-                console.log("============================================");
                 try {
                     let chatMessage = new chatModel({
                         Content: req.body.content,
@@ -35,9 +28,9 @@ module.exports = {
                         }
                     });
      
-                    io.to(req.params.id).emit(chatMessage);
-                    console.log("Emitted message: " + chatMessage.content);
-                    console.log("Room: " + req.params.id);    
+                    // io.to(req.params.id).emit(chatMessage);
+                    // console.log("Emitted message: " + chatMessage.content);
+                    // console.log("Room: " + req.params.id);    
                 } catch (err) { 
                     res.status(errors[1601].header).json(errors[1601]); 
                 } 
@@ -46,13 +39,22 @@ module.exports = {
         });
     },
     GetStreamChat(req, res, next) {
+        let query = { Stream: req.params.id }
+
+        if(req.headers.timestamp && req.headers.timestamp !== "undefined" && req.headers.timestamp !== 0) {
+            query.Date = { $gte : new Date(req.headers.timestamp)}
+        }
         chatModel
-            .find({ Stream: req.params.id })
+            .find(query)
+            .populate("User")
             .then((foundChat, err) => {
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
-                    if(err) throw err
+                    //if(err) throw err
                     return res.json("No chats found");
                 } else {
+                    console.log("====================================================================")
+                    console.log(foundChat)
+                    console.log("====================================================================")
                     res.status(200).json(foundChat);
                 }
             })
@@ -60,9 +62,9 @@ module.exports = {
                 console.log(err)
             });
             
-            io.on('connection', function(socket){
-                console.log("Joined room: " + req.params.id);
-                socket.join(req.params.id);
-            });
+            // io.on('connection', function(socket){
+            //     console.log("Joined room: " + req.params.id);
+            //     socket.join(req.params.id);
+            // });
     }
 }
