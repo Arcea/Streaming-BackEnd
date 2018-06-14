@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //Calling logger and authentication
 app.use(cors())
 //app.use(certauth);
-//app.use(tokenauth);
+app.use(tokenauth);
 app.use(logger);
 
 //Allow Origin
@@ -50,9 +50,9 @@ app.listen(process.env.PORT || 5000, () => {
 });
 
 // job every 15 minute  to clear out tokens.
-var j = schedule.scheduleJob('* 15 * * * *', function(){
-  tokenModel.find({ ExpirationDate: { $lt: Date.now() }}, function(err, foundTokens) {
-    if(err){ console.log(err); }
+var j = schedule.scheduleJob('* 15 * * * *', function () {
+  tokenModel.find({ ExpirationDate: { $lt: Date.now() } }, function (err, foundTokens) {
+    if (err) { console.log(err); }
     foundTokens.forEach(t => t.remove())
   });
 });

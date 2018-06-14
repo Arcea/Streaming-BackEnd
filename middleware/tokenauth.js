@@ -3,7 +3,7 @@ let tokenHelper = require("./../helpers/tokenHelper");
 let tokenModel = require("./../models/Tokens");
 
 function tokenauth(req, res, next) {
-  if (req.url == "/login") {
+  if (req.url == "/login" && (req.headers.token == "" || req.headers.token == undefined || req.headers.token == null)) {
     let newToken = tokenHelper.genToken();
     newToken.save(function (err, newToken) {
       if (err) return console.log(err);
