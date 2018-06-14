@@ -19,11 +19,8 @@ router.get("/login", (req, res) => {
     .send()
     .end();
 });
-router.get("/login", (req, res) => {
-  res
-    .status(200)
-    .send()
-    .end();
+router.get('/token', (req, res) => {
+  res.status(200).send().end();
 });
 
 router.use((error, req, res, next) => {
