@@ -8,7 +8,7 @@ module.exports = {
         userModel.findOne({ Name: req.headers.name }, function (err, foundUser) {
             if (err || foundUser == null || foundUser == undefined || foundUser == "") {
                 // handle error properly.
-                return res.json(errors[1403]);
+                return res.status(errors[1403].header).json(errors[1403]);
             }
             else {
                 console.log(foundUser);
