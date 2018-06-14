@@ -1,6 +1,7 @@
 var db = require('../config/db');
 let chatModel = require("./../models/Chats");
 let userModel = require("./../models/Users");
+let io = require("./../app").io;
 
 module.exports = {
     Chat(req, res, next) {
@@ -12,7 +13,7 @@ module.exports = {
             else{
                 console.log(foundUser);
 
-                let chatMessage = new chatModel.Chats({
+                let chatMessage = new chatModel({
                     Content: req.body.content,
                     Date: Date.now(),
                     Stream: req.params.id,
@@ -26,6 +27,8 @@ module.exports = {
                         res.status(200).json("Message sent");
                     }
                 });
+
+                io.to(req.params.id).emit(chatMessage);
             }
         });
     },
@@ -42,7 +45,6 @@ module.exports = {
             })
             .catch(err => {
                 console.log(err)
-            })
-        ;
+            });   
     }
 }
