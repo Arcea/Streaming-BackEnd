@@ -8,7 +8,7 @@ module.exports = {
         userModel.findOne({ Name: req.headers.name }, function (err, foundUser) {
             if (err || foundUser == null || foundUser == undefined || foundUser == "") {
                 // handle error properly.
-                return res.json(errors[1403]);
+                return res.status(errors[1403].header).json(errors[1403]);
             }
             else {
                 console.log(foundUser);
@@ -33,6 +33,7 @@ module.exports = {
     GetStreamChat(req, res, next) {
         chatModel
             .find({ Stream: req.params.id })
+            .populate("User")
             .then((foundChat, err) => {
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     if (err) throw err
