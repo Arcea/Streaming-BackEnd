@@ -37,6 +37,10 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.options('*', (req, res) => {
+  res.setHeader("Timestamp", 0).end()
+});
+
 app.use(router);
 
 app.listen(process.env.PORT || 5000, () => {
