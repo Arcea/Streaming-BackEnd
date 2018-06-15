@@ -1,8 +1,11 @@
-var express = require("express");
-var path = require("path");
-var bodyParser = require("body-parser");
-var cors = require("cors");
-var app = express();
+const express = require("express");
+const path = require("path");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 //Our personal middleware functions
 let tokenauth = require("./middleware/tokenauth.js");
@@ -43,7 +46,9 @@ app.options('*', (req, res) => {
 
 app.use(router);
 
-app.listen(process.env.PORT || 5000, () => {
+require('./sockets/chatsockets')(io)
+
+http.listen(process.env.PORT || 5000, () => {
   if (process.env.PORT !== undefined) {
     console.log("Server gestart op poort " + process.env.PORT);
   } else {
@@ -52,7 +57,7 @@ app.listen(process.env.PORT || 5000, () => {
 });
 
 // job every 15 minute  to clear out tokens.
-var j = schedule.scheduleJob('* 15 * * * *', function () {
+const j = schedule.scheduleJob('* 15 * * * *', function () {
   tokenModel.find({ ExpirationDate: { $lt: Date.now() } }, function (err, foundTokens) {
     if (err) { console.log(err); }
     foundTokens.forEach(t => t.remove())
