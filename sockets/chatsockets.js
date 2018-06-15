@@ -4,7 +4,7 @@ const moment = require('moment')
 const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
-
+const signData = require('../libs/signature').signData
 function verifySignature(data, sign, user) {
     try {
         let verify = crypto.createVerify("RSA-SHA256");
@@ -51,12 +51,13 @@ module.exports = (io) => {
                                 User: foundUser._id,
                                 Stream: data.stream
                             }) 
-                            message = new chatModel({
+                            message = {
                                 Content: data.content,
                                 Date: moment().format(),
                                 User: foundUser,
-                                Stream: data.stream
-                            })
+                                Stream: data.stream,
+                            }
+                            message.Signature = signData(message.Content)
                         } else {
                             console.log(err)
                         }
