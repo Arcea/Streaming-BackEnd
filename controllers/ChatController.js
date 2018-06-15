@@ -17,7 +17,7 @@ module.exports = {
                     const currentDate = Date.now();
                     console.log(currentDate);
                     let chatMessage = new chatModel({
-                        Content: 'Testing',
+                        Content: req.body.content,
                         Dates: currentDate,
                         Stream: req.params.id,
                         User: foundUser._id
