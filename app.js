@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(cors())
 //app.use(certauth);
 //app.use(tokenauth);
-app.use(logger);
+//app.use(logger);
 
 //Allow Origin
 app.use(function (req, res, next) {
