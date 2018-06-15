@@ -6,7 +6,7 @@ const chatSchema = new mongoose.Schema({
         required: true,
         minlength: 1
     },
-    Dates: {
+    Date: {
         type: Date,
         required: true,
         minLength: 1
