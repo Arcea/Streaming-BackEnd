@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Credentials", true);
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
   res.header('Access-Control-Expose-Headers', '*');
-  res.header('Timestamp', (Math.floor(Date.now()/1000)))
+  res.header('Timestamp', (Math.floor(Date.now())))
   res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json, Token');
   next();
 });

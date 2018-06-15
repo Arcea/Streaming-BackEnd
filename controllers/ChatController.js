@@ -47,9 +47,10 @@ module.exports = {
     GetStreamChat(req, res, next) {
         let query = { Stream: req.params.id }
 
-        if(req.headers.timestamp && req.headers.timestamp !== "undefined" && req.headers.timestamp !== 0) {
-            query.Date = { $gte : new Date(req.headers.timestamp)}
+        if(req.headers.timestamp && req.headers.timestamp !== "undefined" && req.headers.timestamp !== 0 && req.headers.timestamp !== "0") {
+            query.Date = { $gte : new Date(parseInt(req.headers.timestamp,10))}
         }
+        console.log(query, req.headers.timestamp)
         chatModel
             .find(query)
             .populate("User")
