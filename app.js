@@ -55,5 +55,4 @@ var j = schedule.scheduleJob('* 15 * * * *', function () {
   });
 });
 
-
 module.exports = app;

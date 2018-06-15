@@ -14,7 +14,6 @@ module.exports = {
             else{
                 try {
                     const currentDate = Date.now();
-                    console.log(currentDate);
                     let chatMessage = new chatModel({
                         Content: req.body.content,
                         Date: currentDate,
