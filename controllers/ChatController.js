@@ -59,11 +59,8 @@ module.exports = {
                     //if(err) throw err
                     return res.json("No chats found");
                 } else {
-                    console.log("====================================================================")
-                    console.log(foundChat)
-                    console.log("====================================================================")
+                    res.setHeader("Signature", signData(foundChat))
                     res.status(200).json(foundChat);
-                    //res.setHeader("Signature", signData(foundChat))
                 }
             }) 
             .catch(err => {
