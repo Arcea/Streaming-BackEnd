@@ -3,8 +3,7 @@ let chatModel = require("./../models/Chats");
 let userModel = require("./../models/Users");
 let io = require("./../app").io;
 let errors = require('./../libs/errorcodes');
-var moment = require('moment');
-const signData = require('../libs/signature').signData
+const signData = require('../libs/signature').signData;
 
 module.exports = {
     Chat(req, res, next) {
@@ -15,11 +14,9 @@ module.exports = {
             }
             else{
                 try {
-                    const currentDate = Date.now();
-                    console.log(currentDate);
                     let chatMessage = new chatModel({
                         Content: req.body.content,
-                        Date: currentDate,
+                        Date: Date.now(),
                         Stream: req.params.id,
                         User: foundUser._id
                     });
@@ -56,7 +53,7 @@ module.exports = {
             .then((foundChat, err) => {
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     //if(err) throw err
-                    return res.setHeader("Signature", signData(foundChat)).json("No chats found");
+                    return res.json("No chats found");
                 } else {
                     res.setHeader("Signature", signData(foundChat))
                     //console.log("====================================================================")
