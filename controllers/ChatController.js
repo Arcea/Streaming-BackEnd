@@ -55,10 +55,12 @@ module.exports = {
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     //if(err) throw err
                     return res.json("No chats found");
-                } else {
+                } else { 
+                    /*
                     console.log("====================================================================")
                     console.log(foundChat)
                     console.log("====================================================================")
+                    */
                     res.status(200).json(foundChat);
                 }
             })
