@@ -14,11 +14,11 @@ module.exports = {
             }
             else{
                 try {
-                    const Date = moment().format("MMM Do YY");
-                    console.log(Date);
+                    const currentDate = Date.now();
+                    console.log(currentDate);
                     let chatMessage = new chatModel({
-                        Content: req.body.content,
-                        Date: Date,
+                        Content: 'Testing',
+                        Dates: currentDate,
                         Stream: req.params.id,
                         User: foundUser._id
                     });
@@ -35,6 +35,7 @@ module.exports = {
                     // console.log("Emitted message: " + chatMessage.content);
                     // console.log("Room: " + req.params.id);    
                 } catch (err) { 
+                    console.log(err)
                     res.status(errors[1601].header).json(errors[1601]); 
                 } 
 
