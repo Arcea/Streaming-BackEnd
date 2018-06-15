@@ -3,7 +3,6 @@ let chatModel = require("./../models/Chats");
 let userModel = require("./../models/Users");
 let io = require("./../app").io;
 let errors = require('./../libs/errorcodes');
-var moment = require('moment');
 
 module.exports = {
     Chat(req, res, next) {
@@ -14,11 +13,9 @@ module.exports = {
             }
             else{
                 try {
-                    const currentDate = Date.now();
-                    console.log(currentDate);
                     let chatMessage = new chatModel({
                         Content: req.body.content,
-                        Dates: currentDate,
+                        Date: Date.now(),
                         Stream: req.params.id,
                         User: foundUser._id
                     });
@@ -35,7 +32,6 @@ module.exports = {
                     // console.log("Emitted message: " + chatMessage.content);
                     // console.log("Room: " + req.params.id);    
                 } catch (err) { 
-                    console.log(err)
                     res.status(errors[1601].header).json(errors[1601]); 
                 } 
 
@@ -55,12 +51,10 @@ module.exports = {
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     //if(err) throw err
                     return res.json("No chats found");
-                } else { 
-                    /*
-                    console.log("====================================================================")
-                    console.log(foundChat)
-                    console.log("====================================================================")
-                    */
+                } else {
+                    //console.log("====================================================================")
+                    //console.log(foundChat)
+                    //console.log("====================================================================")
                     res.status(200).json(foundChat);
                 }
             })
