@@ -54,6 +54,8 @@ module.exports = {
             .find(query)
             .populate("User")
             .then((foundChat, err) => {
+                console.log(query);
+                console.log(foundChat);
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     //if(err) throw err
                     return res.json("No chats found");
