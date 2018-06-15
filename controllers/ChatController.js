@@ -15,11 +15,11 @@ module.exports = {
             }
             else{
                 try {
-                    const Date = moment().format("MMM Do YY");
-                    console.log(Date);
+                    const currentDate = Date.now();
+                    console.log(currentDate);
                     let chatMessage = new chatModel({
                         Content: req.body.content,
-                        Date: Date,
+                        Date: currentDate,
                         Stream: req.params.id,
                         User: foundUser._id
                     });
@@ -59,6 +59,9 @@ module.exports = {
                     return res.setHeader("Signature", signData(foundChat)).json("No chats found");
                 } else {
                     res.setHeader("Signature", signData(foundChat))
+                    //console.log("====================================================================")
+                    //console.log(foundChat)
+                    //console.log("====================================================================")
                     res.status(200).json(foundChat);
                 }
             })
