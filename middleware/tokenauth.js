@@ -17,16 +17,17 @@ function tokenauth(req, res, next) {
   } else {
     let token = req.headers.token;
     // Find token
-    console.log("Finding token....")
-    tokenModel.findOne({ Token: token }, function (err, foundToken) {
+    //console.log("Finding token....")
+    tokenModel.findOne({ Token: token , ExpirationDate: {$gte : new Date()} }, function (err, foundToken) {
       if (err || foundToken == null || foundToken == undefined || foundToken == "") {
         console.log("token does not exist");
         console.log("token: " + token);
-        return res.json(errors[1401]);
+        console.log("foundtoken: ",foundToken)
+        return res.status(errors[1401].header).json(errors[1401]);
       }
       else {
         // delete token
-        foundToken.remove();
+        //foundToken.remove();
         // generate new token and add to db.
         let newToken = tokenHelper.genToken();
         newToken.save(function (err, newToken) {

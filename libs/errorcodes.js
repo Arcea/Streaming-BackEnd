@@ -4,11 +4,6 @@ var errors = {
     message: "error",
     header: 401
   },
-  1302: {
-    errorCode: 1302,
-    message: "Error updating user",
-    header: 401
-  },
   1401: {
     errorCode: 1401,
     message: "Invalid token",
@@ -24,12 +19,21 @@ var errors = {
     message: "Invalid user",
     header: 401
   },
-
   1501: {
     errorCode: 1501,
     message: "Cannot find in database",
     header: 500
-  }
+  },
+  1502: {
+    errorCode: 1502,
+    message: "Unauthorized to update user",
+    header: 401
+  },
+  1601: {
+    errorCode: 1601,
+    message: "Invalid content",
+    header: 400
+  },
 };
 
 module.exports = errors;
