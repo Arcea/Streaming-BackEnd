@@ -27,9 +27,9 @@ module.exports = {
                         if (err){ 
                             return console.log(err);
                         } else{
-                            const response = {message: "Message sent"}
-                            res.setHeader("Signature", signData(message))
-                            res.status(200).json(message);
+                            const response = {response: "Message sent"}
+                            res.setHeader("Signature", signData(response))
+                            res.status(200).json(response);
                         }
                     });
      
