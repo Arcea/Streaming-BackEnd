@@ -57,7 +57,7 @@ module.exports = (io) => {
                                 User: foundUser,
                                 Stream: data.stream,
                             }
-                            message.Signature = signData(message.Content)
+                            message.Signature = signData(message)
                         } else {
                             console.log(err)
                         }
