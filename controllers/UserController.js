@@ -1,6 +1,7 @@
 const userModel = require("./../models/Users");
 let errors = require("./../libs/errorcodes");
 const ObjectId = require('mongoose').Types.ObjectId
+const signData = require('../libs/signature').signData
 
 module.exports = {
     Get(req, res, next) {
@@ -19,6 +20,7 @@ module.exports = {
                     if(err) throw err
                     res.json("No users found");
                 } else {
+                    res.setHeader("Signature", signData(foundUser))
                     res.status(200).json(foundUser);
                 }
             })
@@ -35,6 +37,7 @@ module.exports = {
                     if(err) throw err
                     res.json("No users found");
                 } else {
+                    res.setHeader("Signature", signData(foundUsers))
                     res.status(200).json(foundUsers);
                 }
             })
@@ -57,8 +60,10 @@ module.exports = {
                     foundUser.update(updateData, function(err, affected){
                         if(err){ 
                             res.status(errors[1402].header).json(errors[1402])
-                        } else{
-                            res.status(200).json("Succesfully updated");
+                        } else {
+                            const response = {message: "Succesfully updated"}
+                            res.setHeader("Signature", signData(message))
+                            res.status(200).json(message);
                         }
                     });
                 }
