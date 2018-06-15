@@ -46,16 +46,15 @@ module.exports = {
     },
     GetStreamChat(req, res, next) {
         let query = { Stream: req.params.id }
-
+        /*
         if(req.headers.timestamp && req.headers.timestamp !== "undefined" && req.headers.timestamp !== 0) {
             query.Date = { $gte : new Date(req.headers.timestamp)}
         }
+        */
         chatModel
             .find(query)
             .populate("User")
             .then((foundChat, err) => {
-                console.log(query);
-                console.log(foundChat);
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     //if(err) throw err
                     return res.json("No chats found");
