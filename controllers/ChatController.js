@@ -31,9 +31,9 @@ module.exports = {
                         }
                     });
      
-                    // io.to(req.params.id).emit(chatMessage);
-                    // console.log("Emitted message: " + chatMessage.content);
-                    // console.log("Room: " + req.params.id);    
+                     io.to(req.params.id).emit(chatMessage);
+                     console.log("Emitted message: " + chatMessage.content);
+                     console.log("Room: " + req.params.id);    
                 } catch (err) { 
                     console.log(err)
                     res.status(errors[1601].header).json(errors[1601]); 
@@ -66,9 +66,9 @@ module.exports = {
                 console.log(err)
             });
             
-            // io.on('connection', function(socket){
-            //     console.log("Joined room: " + req.params.id);
-            //     socket.join(req.params.id);
-            // });
+             io.on('connection', function(socket){
+                 console.log("Joined room: " + req.params.id);
+                 socket.join(req.params.id);
+             });
     }
 }
