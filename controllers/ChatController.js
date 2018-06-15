@@ -4,6 +4,7 @@ let userModel = require("./../models/Users");
 let io = require("./../app").io;
 let errors = require('./../libs/errorcodes');
 var moment = require('moment');
+const signData = require('../libs/signature').signData
 
 module.exports = {
     Chat(req, res, next) {
@@ -27,7 +28,9 @@ module.exports = {
                         if (err){ 
                             return console.log(err);
                         } else{
-                            res.status(200).json("Message sent");
+                            const response = {message: "Message sent"}
+                            res.setHeader("Signature", signData(message))
+                            res.status(200).json(message);
                         }
                     });
      
@@ -53,11 +56,9 @@ module.exports = {
             .then((foundChat, err) => {
                 if (err || foundChat === null || foundChat === undefined || foundChat === "") {
                     //if(err) throw err
-                    return res.json("No chats found");
+                    return res.setHeader("Signature", signData(foundChat)).json("No chats found");
                 } else {
-                    console.log("====================================================================")
-                    console.log(foundChat)
-                    console.log("====================================================================")
+                    res.setHeader("Signature", signData(foundChat))
                     res.status(200).json(foundChat);
                 }
             })
