@@ -13,9 +13,11 @@ module.exports = {
             }
             else{
                 try {
+                    const currentDate = Date.now();
+                    console.log(currentDate);
                     let chatMessage = new chatModel({
                         Content: req.body.content,
-                        Date: Date.now(),
+                        Date: currentDate,
                         Stream: req.params.id,
                         User: foundUser._id
                     });
