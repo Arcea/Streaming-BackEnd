@@ -7,8 +7,8 @@ let path = require('path');
 function certauth(req, res, next) {
   if (req.url == "/login" && req.method == "GET") {
     if (req.headers.token != null && req.headers.token != "" && req.headers.token != undefined) {
-      console.log(req.headers.token);
-      console.log("0");
+      //console.log(req.headers.token);
+      //console.log("0");
       if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
         auth(req, res, function (bool) {
           console.log("1");
@@ -27,11 +27,10 @@ function certauth(req, res, next) {
     }
   } else {
     console.log("3");
-    console.log(req.headers.name, req.headers.token, req.headers.signature);
-    console.log(req.headers.name, req.headers.token, req.headers.signature);
+    //console.log(req.headers.name, req.headers.token, req.headers.signature);
     //console.log(res);
     if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
-      console.log("Got in if");
+      //console.log("Got in if");
       auth(req, res, function (bool) {
         if (bool) {
           next()
@@ -60,13 +59,13 @@ function auth(req, res, cb) {
       let verify = crypto.createVerify("RSA-SHA256");
       let cert = fs.readFileSync(path.join(__dirname, '../keys', user.PublicKey)).toString();
       try {
-        console.log(path.join(__dirname, '../keys', user.PublicKey));
-        console.log(token);
+        //console.log(path.join(__dirname, '../keys', user.PublicKey));
+        //console.log(token);
         verify.update(token);
         cert = cert.toString();
         sign = sign.toString();
         let result = verify.verify(cert, sign, 'hex');
-        console.log(result);
+        //console.log(result);
         cb(result);
       } catch (error) {
         console.log(error);
