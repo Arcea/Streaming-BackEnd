@@ -3,6 +3,7 @@ let chatModel = require("./../models/Chats");
 let userModel = require("./../models/Users");
 let io = require("./../app").io;
 let errors = require('./../libs/errorcodes');
+var moment = require('moment');
 
 module.exports = {
     Chat(req, res, next) {
@@ -13,9 +14,11 @@ module.exports = {
             }
             else{
                 try {
+                    const Date = moment().format("MMM Do YY");
+                    console.log(Date);
                     let chatMessage = new chatModel({
                         Content: req.body.content,
-                        Date: Date.now(),
+                        Date: Date,
                         Stream: req.params.id,
                         User: foundUser._id
                     });
