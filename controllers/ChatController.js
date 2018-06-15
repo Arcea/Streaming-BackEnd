@@ -3,6 +3,7 @@ let chatModel = require("./../models/Chats");
 let userModel = require("./../models/Users");
 let io = require("./../app").io;
 let errors = require('./../libs/errorcodes');
+let moment = require('moment');
 const signData = require('../libs/signature').signData;
 
 module.exports = {
@@ -14,9 +15,11 @@ module.exports = {
             }
             else{
                 try {
+                    const currentDate = moment().format();
+                    console.log(currentDate)
                     let chatMessage = new chatModel({
                         Content: req.body.content,
-                        Date: Date.now(),
+                        Date: currentDate,
                         Stream: req.params.id,
                         User: foundUser._id
                     });
