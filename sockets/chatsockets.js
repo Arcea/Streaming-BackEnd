@@ -74,7 +74,7 @@ module.exports = (io) => {
                     .then(() => broadcastMessage(namespace.to(data.stream), message))
             })
             client.on('disconnect', () => {
-                updateStreamDb(namespace, client.handshake.query.stream)
+                updateStreamDb(namespace, client.handshake.query.stream, -1)
                 broadcastViewerCount(namespace)
             })
 
@@ -98,10 +98,10 @@ function broadcastViewerCount(io) {
     io.emit("VIEWERS", rooms)
 }
 
-function updateStreamDb(io, stream) {
+function updateStreamDb(io, stream, mut = 0) {
     const room = io.adapter.rooms[stream]
     let amount
-    room===undefined?amount = 0: amount = room.length
+    room===undefined?amount = 0: amount = room.length + mut
     streamModel
         .findById(stream)
         .update({Viewers: amount})
