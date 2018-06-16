@@ -1,5 +1,6 @@
 const userModel = require("./../models/Users");
 const chatModel = require("./../models/Chats");
+const streamModel = require("./../models/Streams");
 const moment = require('moment')
 const crypto = require('crypto')
 const fs = require('fs')
@@ -25,24 +26,29 @@ function verifySignature(data, sign, user) {
 }
 
 let clients = []
+
 module.exports = (io) => {
         const namespace = io.of('/chat/socket')
 
         namespace.on('connection', (client) => {
-            clients.push(client);
-            console.log('Connected: %s clients connected', clients.length)
+            client.join(client.handshake.query.stream)
+            console.log('Connected: %s clients connected, added to room %s', clients.length, client.handshake.query.stream)
+            broadcastViewerCount(namespace)
+            updateStreamDb(namespace, client.handshake.query.stream)
             
             client.on('MESSAGE_SEND', (data) => {
                 console.log('<%s> %s: %s',data.stream, data.username, data.content)
                 let DBMessage
                 let message
-                if(!verifySignature(data.content, data.signature, data.userkey)) {
+                const signature = data.signature
+                delete data.signature
+                if(!verifySignature(JSON.stringify(data), signature, data.userkey)) {
                     client.disconnect()
                     return
                 }
-
+                
                 userModel
-                    .findOne({ Name: data.username }) 
+                    .findOne({ Name: data.username, PublicKey: data.userkey }) 
                     .then((foundUser, err) => {
                         if(!err && foundUser) {
                             DBMessage = new chatModel({
@@ -59,17 +65,17 @@ module.exports = (io) => {
                             }
                             message.Signature = signData(message)
                         } else {
-                            console.log(err)
+                            //console.log(err)
                         }
                     })
                     .then(() => {
                         return DBMessage.save();
                     })
-                    .then(() => broadcast(namespace, message))
+                    .then(() => broadcastMessage(namespace.to(data.stream), message))
             })
             client.on('disconnect', () => {
-                clients.splice(clients.indexOf(client),1);
-                console.log('Disconnected: %s sockets connected', clients.length);
+                updateStreamDb(namespace, client.handshake.query.stream)
+                broadcastViewerCount(namespace)
             })
 
             client.on('end', () => {
@@ -78,6 +84,26 @@ module.exports = (io) => {
     })
 };
 
-function broadcast(io, message) {
+function broadcastMessage(io, message) {
     io.emit("MESSAGE", message)
+}
+
+function broadcastViewerCount(io) {
+    rooms = {}
+    Object.keys(io.adapter.rooms).map((item) => {
+        if(item.indexOf('socket') !== -1) return
+        rooms[item] = io.adapter.rooms[item].length || 0
+    })
+    rooms.Signature = signData(rooms)
+    io.emit("VIEWERS", rooms)
+}
+
+function updateStreamDb(io, stream) {
+    const room = io.adapter.rooms[stream]
+    let amount
+    room===undefined?amount = 0: amount = room.length
+    streamModel
+        .findById(stream)
+        .update({Viewers: amount})
+        .then(() => console.log('Database viewercount updated'))
 }

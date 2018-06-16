@@ -41,7 +41,12 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Streams",
         required: false,
-    }]
+    }],
+
+    BoisCoins: {
+        type: Number,
+        default: 0
+    }
 });
 
 const Users = mongoose.model('Users', userSchema);
