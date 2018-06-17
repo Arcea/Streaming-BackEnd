@@ -9,7 +9,8 @@ const chatSchema = new mongoose.Schema({
     Date: {
         type: String,
         required: true,
-        minLength: 1
+        minLength: 1,
+        default: new Date()
     },
     Stream: {
         type: mongoose.Schema.Types.ObjectId,

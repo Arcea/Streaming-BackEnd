@@ -6,10 +6,21 @@ const crypto = require('crypto')
 const fs = require('fs')
 const path = require('path')
 const signData = require('../libs/signature').signData
-function verifySignature(data, sign, user) {
+
+let keycache = []
+
+function verifySignature(data, sign, user,username) {
     try {
         let verify = crypto.createVerify("RSA-SHA256");
-        let cert = fs.readFileSync(path.join(__dirname, '../keys', user)).toString();
+        let cert
+        if(keycache[username]) {
+            cert = keycache[username].Certificate
+        } else {
+            cert = fs.readFileSync(path.join(__dirname, '../keys', user)).toString();
+            keycache[username] = {
+                Certificate: cert
+            }
+        }
         try {
           verify.update(data);
           let result = verify.verify(cert, sign, 'hex');
@@ -42,7 +53,7 @@ module.exports = (io) => {
                 let message
                 const signature = data.signature
                 delete data.signature
-                if(!verifySignature(JSON.stringify(data), signature, data.userkey)) {
+                if(!verifySignature(JSON.stringify(data), signature, data.userkey, data.username)) {
                     client.disconnect()
                     return
                 }
@@ -53,7 +64,6 @@ module.exports = (io) => {
                         if(!err && foundUser) {
                             DBMessage = new chatModel({
                                 Content: data.content,
-                                Date: moment().format(),
                                 User: foundUser._id,
                                 Stream: data.stream
                             }) 
