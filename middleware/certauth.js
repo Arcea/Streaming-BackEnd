@@ -40,7 +40,6 @@ function certauth(req, res, next) {
         }
       });
     } else {
-      console.log("got in else");
       res.status(errors[1402].header).json(errors[1402]);
     }
   }
