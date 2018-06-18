@@ -45,6 +45,8 @@ function certauth(req, res, next) {
   }
 }
 
+let keycache = []
+
 function auth(req, res, cb) {
   let sign = req.headers.signature;
   let name = req.headers.name;
@@ -58,7 +60,15 @@ function auth(req, res, cb) {
       console.log(err);
     try {
       let verify = crypto.createVerify("RSA-SHA256");
-      let cert = fs.readFileSync(path.join(__dirname, '../keys', user.PublicKey)).toString();
+        let cert
+        if(keycache[user.Name]) {
+            cert = keycache[user.Name].Certificate
+        } else {
+            cert = fs.readFileSync(path.join(__dirname, '../keys', user.PublicKey)).toString();
+            keycache[user.Name] = {
+                Certificate: cert
+            }
+        }
       try {
         //console.log(path.join(__dirname, '../keys', user.PublicKey));
         verify.update(JSON.stringify(data));
