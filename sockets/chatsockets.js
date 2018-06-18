@@ -11,30 +11,11 @@ const verifyData = require('../libs/signature').verifyData
 let keycache = []
 function verifySignature(data, sign, user, username) {
     try {
-        // let verify = crypto.createVerify("RSA-SHA256");
-        // let cert
-        // if(keycache[username]) {
-        //     cert = keycache[username].Certificate
-        // } else {
-        //     cert = fs.readFileSync(path.join(__dirname, '../keys', user)).toString();
-        //     keycache[username] = {
-        //         Certificate: cert
-        //     }
-        // }
-        // try {
-        //   verify.update(data);
-        //   let result = verify.verify(cert, sign, 'hex');
-
-        //   return result
-        // } catch (error) {
-        //     console.log(error);
-        //     return false
-        // }
-
-        verifyData(data, sign, user, username, function (result) {
+        const result = verifyData(data, sign, user, username, function (result) {
             console.log(result, typeof result)
             return result;
         });
+        return result
 
     } catch (error) {
         console.log(error);
@@ -67,7 +48,7 @@ module.exports = (io) => {
             let message
             const signature = data.signature
             delete data.signature
-            if (!verifySignature(data, signature, data.userkey)) {
+            if (!verifySignature(data, signature, data.userkey, date.username)) {
                 console.log("Sending message failed")
                 client.disconnect()
                 return
