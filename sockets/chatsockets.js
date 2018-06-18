@@ -32,6 +32,7 @@ function verifySignature(data, sign, user, username) {
         // }
 
         verifyData(data, sign, user, username, function (result) {
+            console.log(result, typeof result)
             return result;
         });
 
