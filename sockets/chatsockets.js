@@ -11,11 +11,25 @@ const verifyData = require('../libs/signature').verifyData
 let keycache = []
 function verifySignature(data, sign, user, username) {
     try {
-        const result = verifyData(data, sign, user, username, function (result) {
-            return result;
-        });
-        return result
+        let verify = crypto.createVerify("RSA-SHA256");
+        let cert
+        if(keycache[username]) {
+            cert = keycache[username].Certificate
+        } else {
+            cert = fs.readFileSync(path.join(__dirname, '../keys', user)).toString();
+            keycache[username] = {
+                Certificate: cert
+            }
+        }
+        try {
+          verify.update(data);
+          let result = verify.verify(cert, sign, 'hex');
 
+          return result
+        } catch (error) {
+            console.log(error);
+            return false
+        }
     } catch (error) {
         console.log(error);
         return false
@@ -31,7 +45,6 @@ module.exports = (io) => {
         client.join(client.handshake.query.stream)
         clients.push(client)
 
-        console.log(verifySignature(client.handshake.query.stream, client.handshake.query.signature, client.handshake.query.userkey, client.handshake.query.username))
         if (!verifySignature(client.handshake.query.stream, client.handshake.query.signature, client.handshake.query.userkey, client.handshake.query.username)) {
             console.log("Authentication failed for %s in stream %s with key %s", client.handshake.query.username, client.handshake.query.stream, client.handshake.query.userkey)
             client.disconnect()
