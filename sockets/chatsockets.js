@@ -31,7 +31,7 @@ function verifySignature(data, sign, user, username) {
         //     return false
         // }
 
-        verifyData(data, sign, pubKey, username, function (result) {
+        verifyData(data, sign, user, username, function (result) {
             return result;
         });
 
