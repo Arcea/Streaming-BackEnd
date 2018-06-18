@@ -45,6 +45,11 @@ module.exports = (io) => {
         client.join(client.handshake.query.stream)
         clients.push(client)
 
+        if(!client.handshake.query.stream || !client.handshake.query.signature || !client.handshake.query.userkey || !client.handshake.query.username) {
+            console.log("Request received without proper params: Username: %s, Stream: %s, Key: %s, Signature: %s", client.handshake.query.username, client.handshake.query.stream, client.handshake.query.userkey, client.handshake.query.signature)
+            client.disconnect()
+            return
+        }
         if (!verifySignature(client.handshake.query.stream, client.handshake.query.signature, client.handshake.query.userkey, client.handshake.query.username)) {
             console.log("Authentication failed for %s in stream %s with key %s", client.handshake.query.username, client.handshake.query.stream, client.handshake.query.userkey)
             client.disconnect()
