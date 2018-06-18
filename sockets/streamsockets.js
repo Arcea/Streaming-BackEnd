@@ -15,5 +15,13 @@ module.exports = (io) => {
         client.on('end', () => {
             client.disconnect()
         })
+
+        client.on('f',function (data) {
+            switch(data.function){
+                case 'getStream':
+                    client.join('STREAM_'+data.feed)
+                break;
+            }
+        })
     })
 };
