@@ -28,7 +28,9 @@ module.exports = {
             }
         }
         try {
-            data = JSON.stringify(data);
+            if (typeof data !== "string") {
+                data = JSON.stringify(data);
+            }
             sign = sign.toString();
             cert = cert.toString();
             verify.update(data);
