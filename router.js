@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const userModel = require('./models/Users')
 //Declare any routes here.
 
 const chatRoutes = require("./routes/chat_routes.js");
@@ -14,36 +13,13 @@ router.use("/streams", streamRoutes);
 router.use("/users", userRoutes);
 
 router.get("/login", (req, res) => {
-          userModel
-            .findOne({ Name: req.headers.name })
-            .then((foundUser, err) => {
-                if (err || foundUser === null || foundUser === undefined || foundUser === "") {
-                    if(err) throw err
-                    res.json("No users found");
-                } else {
-                    res.setHeader("Signature", signData(foundUser))
-                    res.status(200).json(foundUser);
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            });
+  res
+    .status(204)
+    .send()
+    .end();
 });
 router.get('/token', (req, res) => {
-          userModel
-            .findOne({ Name: req.headers.name })
-            .then((foundUser, err) => {
-                if (err || foundUser === null || foundUser === undefined || foundUser === "") {
-                    if(err) throw err
-                    res.json("No users found");
-                } else {
-                    res.setHeader("Signature", signData(foundUser))
-                    res.status(200).json(foundUser);
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            });
+  res.status(204).send().end();
 });
 
 router.use((error, req, res, next) => {
