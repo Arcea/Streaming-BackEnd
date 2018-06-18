@@ -28,6 +28,9 @@ module.exports = {
             }
         }
         try {
+            data = JSON.stringify(data);
+            sign = sign.toString();
+            cert = cert.toString();
             verify.update(data);
             let result = verify.verify(cert, sign, 'hex');
 
