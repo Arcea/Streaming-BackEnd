@@ -12,7 +12,6 @@ let keycache = []
 function verifySignature(data, sign, user, username) {
     try {
         const result = verifyData(data, sign, user, username, function (result) {
-            console.log(result, typeof result)
             return result;
         });
         return result
@@ -32,6 +31,7 @@ module.exports = (io) => {
         client.join(client.handshake.query.stream)
         clients.push(client)
 
+        console.log(verifySignature(client.handshake.query.stream, client.handshake.query.signature, client.handshake.query.userkey, client.handshake.query.username))
         if (!verifySignature(client.handshake.query.stream, client.handshake.query.signature, client.handshake.query.userkey, client.handshake.query.username)) {
             console.log("Authentication failed for %s in stream %s with key %s", client.handshake.query.username, client.handshake.query.stream, client.handshake.query.userkey)
             client.disconnect()
