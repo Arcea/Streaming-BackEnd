@@ -35,8 +35,9 @@ module.exports = {
             sign = sign.toString();
             cert = cert.toString();
             verify.update(data);
+            console.log(data)
             let result = verify.verify(cert, sign, 'hex');
-
+            console.log(result)
             cb(result);
         } catch (error) {
             console.log(error);

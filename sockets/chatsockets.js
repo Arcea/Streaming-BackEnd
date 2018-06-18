@@ -51,7 +51,7 @@ module.exports = (io) => {
         clients.push(client)
 
         if (!verifySignature(client.handshake.query.stream, client.handshake.query.signature, client.handshake.query.userkey, client.handshake.query.username)) {
-            console.log("Authentication failed for %s", client.handshake.query.username)
+            console.log("Authentication failed for %s in stream %s with key %s", client.handshake.query.username, client.handshake.query.stream, client.handshake.query.userkey)
             client.disconnect()
             return
         }
