@@ -18,7 +18,7 @@ mongoose.connect(process.env.DB_HOST, options, error => {
   if (error) {
     console.log("Error connecting to ", process.env.DB_HOST, error);
   } else {
-    console.log("Succesfully connected to ", process.env.DB_HOST);
+    //console.log("Succesfully connected to ", process.env.DB_HOST);
   }
 });
 
