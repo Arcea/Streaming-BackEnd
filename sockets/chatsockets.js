@@ -61,7 +61,6 @@ module.exports = (io) => {
                     } else {
                         //console.log(err)
                     }
-                    message.Signature = signData(message)
                 })
                 .then(() => {
                     return DBMessage.save();
