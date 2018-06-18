@@ -28,5 +28,18 @@ module.exports = {
 			.catch((err) => {
 				next(err)
 			})
+	},
+	addStream(req, res, next) {
+		Stream = new Streams(req.body)
+		Stream
+			.save()
+			.then((stream, err) => {
+				if(err) throw err;
+				res.setHeader("Signature", signData(stream))
+				res.status(200).json(stream)
+			})
+			.catch((err) => {
+				next(err)
+			})
 	}
 }

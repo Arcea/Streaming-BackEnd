@@ -42,10 +42,10 @@ module.exports = (io) => {
                 let message
                 const signature = data.signature
                 delete data.signature
-                if(!verifySignature(JSON.stringify(data), signature, data.userkey)) {
-                    client.disconnect()
-                    return
-                }
+                // if(!verifySignature(JSON.stringify(data), signature, data.userkey)) {
+                //     client.disconnect()
+                //     return
+                // }
                 
                 userModel
                     .findOne({ Name: data.username, PublicKey: data.userkey }) 
