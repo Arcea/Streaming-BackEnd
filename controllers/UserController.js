@@ -7,12 +7,9 @@ module.exports = {
     Get(req, res, next) {
         let $or = [ ]
 
-        if (ObjectId.isValid(req.params.id)) {
-            $or.push({_id: req.params.id})
-        } else {
-            $or.push({Name: req.params.id}) 
-        }
-        console.log($or)
+        if (ObjectId.isValid(req.params.id)) $or.push({_id: req.params.id})
+        $or.push({Name: req.params.id}) 
+
         userModel
             .findOne({ $or: $or })
             .populate("Streams")
