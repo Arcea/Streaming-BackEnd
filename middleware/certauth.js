@@ -49,7 +49,8 @@ function auth(req, res, cb) {
   let sign = req.headers.signature;
   let name = req.headers.name;
   //let token = req.headers.token;
-  let data = req.body || req.headers.token
+  if(req.body.length===0) let data = req.headers.token
+  else let data = req.body
 
   //console.log(req.connection.getPeerCertificate());
   //DB get pubkey by name;
