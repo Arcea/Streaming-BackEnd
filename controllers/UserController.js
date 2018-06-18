@@ -12,6 +12,7 @@ module.exports = {
         } else {
             $or.push({Name: req.params.id}) 
         }
+        console.log($or)
         userModel
             .findOne({ $or: $or })
             .populate("Streams")
