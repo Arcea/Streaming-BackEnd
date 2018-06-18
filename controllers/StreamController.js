@@ -29,6 +29,18 @@ module.exports = {
 				next(err)
 			})
 	},
+	GetOneByName(req, res, next){
+		Streams.findOne({ name: req.params.name }).select("-__v")
+			.populate("User", "-Streams")
+			.then((stream, err) => {
+				if(err) throw err;
+				res.setHeader("Signature", signData(stream))
+				res.status(200).json(stream)
+			})
+			.catch((err) => {
+				next(err)
+			})
+	},
 	addStream(req, res, next) {
 		Stream = new Streams(req.body)
 		Stream
