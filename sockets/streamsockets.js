@@ -6,7 +6,6 @@ module.exports = (io) => {
     namespace.on('connection', (client) => {
         //client.join(client.handshake.query.stream)
         clients.push(client)
-        console.log(client)
         console.log('Connected: %s clients connected', clients.length)
 
         client.on('disconnect', () => {
