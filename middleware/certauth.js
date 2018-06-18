@@ -39,7 +39,6 @@ function certauth(req, res, next) {
         }
       });
     } else {
-      console.log("got in else");
       res.status(errors[1402].header).json(errors[1402]);
     }
   }
@@ -76,7 +75,6 @@ function auth(req, res, cb) {
         sign = sign.toString();
         let result = verify.verify(cert, sign, 'hex');
         cb(result);
-        console.log("yay");
       } catch (error) {
         console.log(error);
         return res.status(errors[1402].header).json(errors[1402]);
