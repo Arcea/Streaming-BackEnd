@@ -47,6 +47,7 @@ app.options('*', (req, res) => {
 app.use(router);
 
 require('./sockets/chatsockets')(io)
+require('./sockets/streamsockets')(io)
 
 http.listen(process.env.PORT || 5000, () => {
   if (process.env.PORT !== undefined) {
