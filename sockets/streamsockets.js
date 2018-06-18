@@ -7,7 +7,7 @@ module.exports = (io) => {
         //client.join(client.handshake.query.stream)
         clients.push(client)
         console.log(client)
-        console.log('Connected: %s clients connected, added to room %s', clients.length, client.handshake.query.stream)
+        console.log('Connected: %s clients connected', clients.length)
 
         client.on('disconnect', () => {
             clients.splice(clients.indexOf(client), 1);
