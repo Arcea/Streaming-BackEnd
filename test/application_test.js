@@ -7,11 +7,13 @@ const assert = chai.assert;
 
 chai.use(chaiHttp)
 
+var mongoose = null;
+
 describe('Application is running...', () =>{
 	it('Should be running', function(done){
         chai.request(app).get('/').end(function(error, response, body){
             assert.isNotEmpty(response);
             done();
         });
-    });
+	});
 });
