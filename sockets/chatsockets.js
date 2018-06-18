@@ -71,6 +71,7 @@ module.exports = (io) => {
         client.on('disconnect', () => {
             updateStreamDb(namespace, client.handshake.query.stream, -1)
             broadcastViewerCount(namespace)
+            clients.splice(clients.indexOf(client),1);
         })
 
         client.on('end', () => {
