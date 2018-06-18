@@ -61,7 +61,7 @@ module.exports = (io) => {
             let message
             const signature = data.signature
             delete data.signature
-            if (!verifySignature(data, signature, data.userkey, date.username)) {
+            if (!verifySignature(data, signature, data.userkey, data.username)) {
                 console.log("Sending message failed")
                 client.disconnect()
                 return
