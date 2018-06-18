@@ -8,15 +8,32 @@ const path = require('path')
 const signData = require('../libs/signature').signData
 const verifyData = require('../libs/signature').verifyData
 
-function verifySignature(data, sign, pubKey, username) {
+let keycache = []
+function verifySignature(data, sign, user,username) {
     try {
-        verifyData(data, sign, pubKey, username, function (result) {
-            return result;
-        });
-    } catch (error) {
+        let verify = crypto.createVerify("RSA-SHA256");
+        let cert
+        if(keycache[username]) {
+            cert = keycache[username].Certificate
+        } else {
+            cert = fs.readFileSync(path.join(__dirname, '../keys', user)).toString();
+            keycache[username] = {
+                Certificate: cert
+            }
+        }
+        try {
+          verify.update(data);
+          let result = verify.verify(cert, sign, 'hex');
+
+          return result
+        } catch (error) {
+            console.log(error);
+            return false
+        }
+      } catch (error) {
         console.log(error);
         return false
-    }
+      }
 }
 
 let clients = []
@@ -27,7 +44,14 @@ module.exports = (io) => {
     namespace.on('connection', (client) => {
         client.join(client.handshake.query.stream)
         clients.push(client)
+
+        if(!verifySignature(client.handshake.query.stream, client.handshake.query.signature, client.handshake.query.userkey, client.handshake.query.username)) {
+            console.log("Authentication failed for %s", client.handshake.query.username)
+            client.disconnect()
+            return
+        }
         console.log('Connected: %s clients connected, added to room %s', clients.length, client.handshake.query.stream)
+        
         broadcastViewerCount(namespace)
         updateStreamDb(namespace, client.handshake.query.stream)
 
@@ -37,10 +61,11 @@ module.exports = (io) => {
             let message
             const signature = data.signature
             delete data.signature
-            // if(!verifySignature(JSON.stringify(data), signature, data.userkey)) {
-            //     client.disconnect()
-            //     return
-            // }
+            if(!verifySignature(data, signature, data.userkey)) {
+                console.log("Sending message failed")
+                client.disconnect()
+                return
+            }
 
             userModel
                 .findOne({ Name: data.username, PublicKey: data.userkey })
@@ -58,10 +83,7 @@ module.exports = (io) => {
                             Stream: data.stream,
                         }
                         message.Signature = signData(message)
-                    } else {
-                        //console.log(err)
                     }
-                    message.Signature = signData(message)
                 })
                 .then(() => {
                     return DBMessage.save();
