@@ -60,7 +60,7 @@ function auth(req, res, cb) {
     try {
       verifyData(data, sign, user.PublicKey, user.Name, function (result) {
         if (result) {
-          next();
+          cb(result);
         } else {
           return res.status(errors[1402].header).json(errors[1402]);
         }
