@@ -28,6 +28,7 @@ module.exports = {
             }
         }
         try {
+            console.log(typeof data)
             if (typeof data !== "string") {
                 data = JSON.stringify(data);
             }
