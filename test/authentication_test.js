@@ -12,6 +12,8 @@ chai.use(chaiHttp)
 
 
 describe('User Authentication', () =>{
+
+    // attempted authentication without any credentials.
 	it('Should reject unauthorized access', function(done){
         this.timeout(0);
         chai.request(app).get('/').end(function(error, response, body){
@@ -21,6 +23,7 @@ describe('User Authentication', () =>{
         });
     });
     
+    // attempted authentication without proper credentials.
     it('Should deny invalid authentication attempts', function(done){
         this.timeout(0);
         chai.request(app).post('/')
@@ -34,13 +37,17 @@ describe('User Authentication', () =>{
         });
     });
     
+    // attempted authentication with proper credentials.
     it('Should accept valid authentication attempts', function(done){
         this.timeout(0);
+
+        // requesting initial token.
         chai.request(app).get('/login').end(function(error, response, body) {
             name = "Thijmen Boot";
             responseToken = response.headers.token;
             signature = signToken({}); 
 
+            // using token to verify the request to '/stream' 
             chai.request(app).get('/streams')
             .set('content-type', 'application/x-www-form-urlencoded')
             .set('Name', "Thijmen Boot")

@@ -12,6 +12,8 @@ chai.use(chaiHttp)
 
 
 describe('Token generation', () =>{
+
+    // getting a token from the server.
     it('Should return a token', function(done){
         chai.request(app).get('/login').end(function(error, response, body) {
             assert.isNotEmpty(response.headers.token);
