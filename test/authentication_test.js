@@ -13,6 +13,7 @@ chai.use(chaiHttp)
 
 describe('User Authentication', () =>{
 	it('Should reject unauthorized access', function(done){
+        this.timeout(0);
         chai.request(app).get('/').end(function(error, response, body){
             assert.equal(response.status, 401);
             assert.equal(response.body.errorCode, 1402);
@@ -21,6 +22,7 @@ describe('User Authentication', () =>{
     });
     
     it('Should deny invalid authentication attempts', function(done){
+        this.timeout(0);
         chai.request(app).post('/')
         .set('content-type', 'application/x-www-form-urlencoded')
         .set('Name', "Thijmen Boot")
