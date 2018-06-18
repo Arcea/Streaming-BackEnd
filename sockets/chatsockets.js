@@ -26,6 +26,7 @@ module.exports = (io) => {
 
     namespace.on('connection', (client) => {
         client.join(client.handshake.query.stream)
+        clients.push(client)
         console.log('Connected: %s clients connected, added to room %s', clients.length, client.handshake.query.stream)
         broadcastViewerCount(namespace)
         updateStreamDb(namespace, client.handshake.query.stream)
@@ -60,6 +61,7 @@ module.exports = (io) => {
                     } else {
                         //console.log(err)
                     }
+                    message.Signature = signData(message)
                 })
                 .then(() => {
                     return DBMessage.save();
