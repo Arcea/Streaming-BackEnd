@@ -25,7 +25,6 @@ function tokenauth(req, res, next) {
         return res.status(errors[1401].header).json(errors[1401]);
       }
       else {
-        console.log("ELSE TOKENAUTH RIP")
         // delete token
         //foundToken.remove();
         // generate new token and add to db.
