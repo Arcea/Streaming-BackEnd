@@ -34,15 +34,19 @@ module.exports = {
             }
 
             try {
-                var issuer = certs.getIssuer(fs.readFileSync(path.join(__dirname, '../keys', pubKey)));
+                var pubPath = path.join(__dirname, '../keys', pubKey);
+                var issuer = certs.getIssuer(fs.readFileSync(pubPath));
+                console.log(pubPath);
+                console.log(pubKey);
+                console.log("Issuer of " + pubKey + " is: ");
+                console.log(issuer);
                 issuer = issuer.toString();
             } catch (error) {
                 console.log(error);
             }
             //issuer = issuer.toString();
 
-            console.log("Issuer of " + pubKey + " is: ");
-            console.log(issuer);
+
 
             sign = sign.toString();
             cert = cert.toString();
