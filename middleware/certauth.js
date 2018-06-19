@@ -55,7 +55,7 @@ function auth(req, res, cb) {
   console.log("=====")
   if (Object.keys(req.body).length === 0) data = { token: req.headers.token }
   else data = req.body
-
+console.log(data)
   //console.log(req.connection.getPeerCertificate());
   //DB get pubkey by name;
   UserModel.findOne({ "Name": name }, function (err, user) {
