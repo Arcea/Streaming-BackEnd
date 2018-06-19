@@ -45,7 +45,7 @@ describe('User Authentication', () =>{
         chai.request(app).get('/login').end(function(error, response, body) {
             name = "Thijmen Boot";
             responseToken = response.headers.token;
-            signature = signToken({}); 
+            signature = signToken({token: responseToken}); 
 
             // using token to verify the request to '/stream' 
             chai.request(app).get('/streams')
