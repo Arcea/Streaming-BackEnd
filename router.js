@@ -14,12 +14,12 @@ router.use("/users", userRoutes);
 
 router.get("/login", (req, res) => {
   res
-    .status(200)
+    .status(204)
     .send()
     .end();
 });
 router.get('/token', (req, res) => {
-  res.status(200).send().end();
+  res.status(204).send().end();
 });
 
 router.use((error, req, res, next) => {
@@ -32,7 +32,7 @@ router.use((error, req, res, next) => {
 });
 
 //Catching all other requests
-router.get("*", (req, res) => {
+router.use("*", (req, res) => {
   res
     .status(404)
     .send({

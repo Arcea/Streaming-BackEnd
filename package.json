@@ -7,8 +7,6 @@
   "scripts": {
     "start": "node .",
     "test": "node node_modules/mocha/bin/_mocha ./test/*test.js --reporter spec --exit",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha",
-    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "startmon": "nodemon ."
   },
   "dependencies": {
@@ -23,17 +21,15 @@
     "morgan": "~1.9.0",
     "node-schedule": "^1.3.0",
     "socket.io": "^2.1.1",
-    "uuid": "^3.2.1"
+    "uuid": "^3.2.1",
+    "x509": "^0.3.3"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "chai-http": "^3.0.0",
-    "coveralls": "^3.0.1",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
-    "istanbul": "^0.4.5",
-    "mocha": "^4.0.1",
-    "mocha-lcov-reporter": "^1.3.0",
+    "mocha": "^4.1.0",
     "nodemon": "^1.17.5"
   },
   "homepage": "https://github.com/BoisIO/Back-End#readme",

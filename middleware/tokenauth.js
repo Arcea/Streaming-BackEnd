@@ -7,7 +7,6 @@ function tokenauth(req, res, next) {
     let newToken = tokenHelper.genToken();
     newToken.save(function (err, newToken) {
       if (err) return console.log(err);
-      console.log("Succesfully saved Token");
     });
     res.setHeader("Token", newToken.Token);
     next();
@@ -17,7 +16,7 @@ function tokenauth(req, res, next) {
   } else {
     let token = req.headers.token;
     // Find token
-    //console.log("Finding token....")
+    console.log("Finding token....")
     tokenModel.findOne({ Token: token , ExpirationDate: {$gte : new Date()} }, function (err, foundToken) {
       if (err || foundToken == null || foundToken == undefined || foundToken == "") {
         console.log("token does not exist");
