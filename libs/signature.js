@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const certs = require('x509');
 
-const certificate = fs.readFileSync(path.join(__dirname, '../keys', 'rootCA.key'));
+const certificate = process.env.rootCA;
 
 let keycache = []
 
