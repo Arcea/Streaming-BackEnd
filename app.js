@@ -18,14 +18,14 @@ const schedule = require("node-schedule");
 let tokenModel = require("./models/Tokens");
 
 app.use(bodyParser.json());
-app.use(bodyParser.json({type:'application/vnd.api+json'}));
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "public")));
 
 //Calling logger and authentication
 app.use(cors())
-//app.use(certauth);
+app.use(certauth);
 app.use(tokenauth);
 app.use(logger);
 
