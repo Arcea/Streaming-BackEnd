@@ -33,21 +33,11 @@ module.exports = {
 	GetOneByName(req, res, next){
 		console.log(req.params.name)
 		Users.findOne({ Name: req.params.name }).select()
-			.then((user, err) => {
-				Streams.findOne({ User: user._id }).select("-__v")
-				.populate("User", "-Streams")
-				.then((stream, err) => {
-					console.log(name)
-					console.log(user._id)
-					console.log("Shit going wrong here?")
-					if(err) throw err;
-					res.setHeader("Signature", signData(stream))
-					res.status(200).json(stream)
-				})
-				.catch((err) => {
-					console.log("Sor here?")
-					next(err)
-				})
+			.populate("Streams")
+			.then((user, err) => { 
+				if(err) throw err;
+				res.setHeader("Signature", signData(user))
+				res.status(200).json(user)
 			})
 			.catch((err) => {
 				console.log("Hear")
