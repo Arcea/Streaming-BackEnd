@@ -33,9 +33,11 @@ module.exports = {
                 data = JSON.stringify(data);
             }
 
-            let issuer = certs.getIssuer(path.join(__dirname, '../keys', pubKey).toString());
+            let issuer = certs.getIssuer(path.join(__dirname, '../keys', pubKey));
+            issuer = issuer.toString();
 
-            console.log("Issuer of " + pubKey + " is: " + issuer);
+            console.log("Issuer of " + pubKey + " is: ");
+            console.log(issuer);
 
             sign = sign.toString();
             cert = cert.toString();
