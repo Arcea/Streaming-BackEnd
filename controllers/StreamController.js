@@ -36,15 +36,20 @@ module.exports = {
 				Streams.findOne({ User: user._id }).select("-__v")
 				.populate("User", "-Streams")
 				.then((stream, err) => {
+					console.log(name)
+					console.log(user._id)
+					console.log("Shit going wrong here?")
 					if(err) throw err;
 					res.setHeader("Signature", signData(stream))
 					res.status(200).json(stream)
 				})
 				.catch((err) => {
+					console.log("Sor here?")
 					next(err)
 				})
 			})
 			.catch((err) => {
+				console.log("Hear")
 				next(err)
 			})
 	},

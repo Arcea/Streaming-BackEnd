@@ -49,13 +49,8 @@ function auth(req, res, cb) {
   let name = req.headers.name;
   //let token = req.headers.token;
   let data
-  console.log("=====")
-  console.log(sign)
-  console.log(name)
-  console.log("=====")
   if (Object.keys(req.body).length === 0) data = { token: req.headers.token }
   else data = req.body
-console.log(data)
   //console.log(req.connection.getPeerCertificate());
   //DB get pubkey by name;
   UserModel.findOne({ "Name": name }, function (err, user) {
@@ -67,12 +62,10 @@ console.log(data)
         if (result) {
           cb(result);
         } else {
-          console.log("verify data err 1")
           return res.status(errors[1402].header).json(errors[1402]);
         }
       });
     } catch (error) {
-      console.log("verify data err 2")
       console.log(error);
       return res.status(errors[1402].header).json(errors[1402]);
     }
