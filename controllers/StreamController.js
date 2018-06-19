@@ -31,6 +31,7 @@ module.exports = {
 			})
 	},
 	GetOneByName(req, res, next){
+		console.log(req.params.name)
 		Users.findOne({ name: req.params.name }).select()
 			.then((user, err) => {
 				Streams.findOne({ User: user._id }).select("-__v")
