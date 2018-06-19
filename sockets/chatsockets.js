@@ -55,7 +55,7 @@ module.exports = (io) => {
             client.disconnect()
             return
         }
-        console.log('Connected: %s clients connected, added to room %s', clients.length, client.handshake.query.stream)
+        console.log('Connected: %s clients connected, %s added to room %s', clients.length, client.handshake.query.username, client.handshake.query.stream)
 
         broadcastViewerCount(namespace)
         updateStreamDb(namespace, client.handshake.query.stream)
