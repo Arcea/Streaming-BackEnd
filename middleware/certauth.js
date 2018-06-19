@@ -29,7 +29,6 @@ function certauth(req, res, next) {
   } else {
     console.log("3");
     console.log(req.headers.name, req.headers.token, req.headers.signature);
-    console.log(res);
     if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
       console.log("Got in if");
       auth(req, res, function (bool) {
@@ -50,7 +49,7 @@ function auth(req, res, cb) {
   let name = req.headers.name;
   //let token = req.headers.token;
   let data
-  if(Object.keys(req.body).length === 0) data = {token: req.headers.token}
+  if (Object.keys(req.body).length === 0) data = { token: req.headers.token }
   else data = req.body
 
   //console.log(req.connection.getPeerCertificate());
