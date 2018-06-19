@@ -16,7 +16,7 @@ function tokenauth(req, res, next) {
   } else {
     let token = req.headers.token;
     // Find token
-    //console.log("Finding token....")
+    console.log("Finding token....")
     tokenModel.findOne({ Token: token , ExpirationDate: {$gte : new Date()} }, function (err, foundToken) {
       if (err || foundToken == null || foundToken == undefined || foundToken == "") {
         console.log("token does not exist");
@@ -25,6 +25,7 @@ function tokenauth(req, res, next) {
         return res.status(errors[1401].header).json(errors[1401]);
       }
       else {
+        console.log("ELSE TOKENAUTH RIP")
         // delete token
         //foundToken.remove();
         // generate new token and add to db.
