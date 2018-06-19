@@ -9,10 +9,10 @@ function certauth(req, res, next) {
   if (req.url == "/login" && req.method == "GET") {
     if (req.headers.token != null && req.headers.token != "" && req.headers.token != undefined) {
       console.log(req.headers.token);
-      //console.log("0");
+      console.log("0");
       if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
         auth(req, res, function (bool) {
-          //console.log("1");
+          console.log("1");
           if (bool) {
             next();
           } else {
@@ -23,15 +23,15 @@ function certauth(req, res, next) {
         res.status(errors[1402].header).json(errors[1402]);
       }
     } else {
-      //console.log("2");
+      console.log("2");
       next();
     }
   } else {
-    //console.log("3");
-    //console.log(req.headers.name, req.headers.token, req.headers.signature);
-    //console.log(res);
+    console.log("3");
+    console.log(req.headers.name, req.headers.token, req.headers.signature);
+    console.log(res);
     if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
-      //console.log("Got in if");
+      console.log("Got in if");
       auth(req, res, function (bool) {
         if (bool) {
           next()
