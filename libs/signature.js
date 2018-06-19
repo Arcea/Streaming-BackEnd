@@ -33,8 +33,8 @@ module.exports = {
                 data = JSON.stringify(data);
             }
 
-            let issuer = certs.getIssuer(path.join(__dirname, '../keys', pubKey));
-            issuer = issuer.toString();
+            let issuer = certs.getIssuer(fs.readFileSync(path.join(__dirname, '../keys', pubKey).toString()));
+            //issuer = issuer.toString();
 
             console.log("Issuer of " + pubKey + " is: ");
             console.log(issuer);
