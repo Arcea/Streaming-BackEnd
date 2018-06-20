@@ -56,5 +56,17 @@ module.exports = {
 			.catch((err) => {
 				next(err)
 			})
+	},
+	Activate(req, res, next) {
+		Streams.findOneAndUpdate({ _id: req.params.streamid }, { Port: req.body.port, Live: true}, {upsert: true}, function(err, doc){
+			if(err) return res.send(500, { error: err});
+			return res.send("Saved stream status");
+		});
+	},
+	Deactivate(req, res, next) {
+		Streams.findOneAndUpdate({ _id: req.params.streamid }, { Port: 0, Live: false }, {upsert: true}, function(err, doc){
+			if(err) return res.send(500, { error: err});
+			return res.send("Saved stream status");
+		});
 	}
 }

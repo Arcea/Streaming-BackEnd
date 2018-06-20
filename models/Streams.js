@@ -16,6 +16,17 @@ const streamSchema = new mongoose.Schema({
         required: true,
         minLength: 1
     },
+    Live: {
+        type: Boolean,
+        required: false,
+        minlength: 1,
+        default: false
+    },
+    Port: {
+        type: Number,
+        required: false,
+        minlength: 1,
+    },
     User: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
