@@ -1,7 +1,6 @@
 const crypto = require("crypto");
 const fs = require('fs');
 const path = require('path');
-const certs = require('x509');
 
 const certificate = process.env.rootCA;
 
@@ -35,19 +34,13 @@ module.exports = {
 
             try {
                 var pubPath = path.join(__dirname, '../keys', pubKey);
-                var issuer = certs.getIssuer(pubPath);
                 //issuer = issuer.toString();
-                if (issuer['organizationName'] == "Circle") {
-                    //issuer = issuer.toString();
-                    sign = sign.toString();
-                    cert = cert.toString();
-                    verify.update(data);
-                    let result = verify.verify(cert, sign, 'hex');
-                    console.log("Verify is: " + result);
-                    cb(result);
-                } else {
-                    cb(false);
-                }
+                sign = sign.toString();
+                cert = cert.toString();
+                verify.update(data);
+                let result = verify.verify(cert, sign, 'hex');
+                console.log("Verify is: " + result);
+                cb(result);
             } catch (error) {
                 console.log(error);
                 cb(false);
