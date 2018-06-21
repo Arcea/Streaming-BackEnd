@@ -58,7 +58,7 @@ module.exports = {
 			})
 	},
 	Activate(req, res, next) {
-		Streams.findOneAndUpdate({_id: req.params.streamid}, { Port: req.body.port, Live: true}, function(doc, err){
+		Streams.findByIdAndUpdate(req.params.streamid, { Port: req.body.port, Live: true}, function(doc, err){
 			console.log('OMG WHY DOESNT THIS FUCKING WORK ALREADY',err, doc)
 			if(err) return res.send(500, { error: err});
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+doc)
@@ -66,7 +66,7 @@ module.exports = {
 		});
 	},
 	Deactivate(req, res, next) {
-		Streams.findOneAndUpdate({_id: req.params.streamid}, { Port: 0, Live: false }, function(doc, err){
+		Streams.findByIdAndUpdate(req.params.streamid, { Port: 0, Live: false }, function(doc, err){
 			console.log('OMG WHY DOESNT THIS FUCKING WORK ALREADY',err, doc)
 			if(err) return res.send(500, { error: err});
 			return res.send("Saved stream status");
