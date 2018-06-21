@@ -36,14 +36,11 @@ module.exports = {
             try {
                 var pubPath = path.join(__dirname, '../keys', pubKey);
                 var issuer = certs.getIssuer(pubPath);
-                //issuer = issuer.toString();
                 if (issuer['organizationName'] == "Circle") {
-                    //issuer = issuer.toString();
                     sign = sign.toString();
                     cert = cert.toString();
                     verify.update(data);
                     let result = verify.verify(cert, sign, 'hex');
-                    console.log("Verify is: " + result);
                     cb(result);
                 } else {
                     cb(false);

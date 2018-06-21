@@ -21,28 +21,19 @@ const userSchema = new mongoose.Schema({
         required: true,
         minLength: 1
     },
-
-    TransparentUser: {
-        type: Boolean,
-        required: true
-    },
-
     Slogan: {
         type: String,
         required: false
     },
-
     Avatar: {
         type: String,
         required: false
     },
-
     Streams: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Streams",
         required: false,
     }],
-
     BoisCoins: {
         type: Number,
         default: 0
@@ -51,4 +42,4 @@ const userSchema = new mongoose.Schema({
 
 const Users = mongoose.model('Users', userSchema);
 
-module.exports = Users;
+module.exports = Users; 

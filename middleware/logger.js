@@ -7,7 +7,6 @@ function Logger(req, res, next) {
   userModel.findOne({ Name: name }, function (err, foundUser) {
     if (err || foundUser == null || foundUser == undefined || foundUser == "") {
       // handle error properly when user is not found.
-      // console.log("Couldnt log this user: " + err);
     }
     else {
       let action = new actionModel({

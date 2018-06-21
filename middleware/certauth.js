@@ -8,11 +8,8 @@ const verifyData = require('../libs/signature').verifyData
 function certauth(req, res, next) {
   if (req.url == "/login" && req.method == "GET") {
     if (req.headers.token != null && req.headers.token != "" && req.headers.token != undefined) {
-      console.log(req.headers.token);
-      console.log("0");
       if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
         auth(req, res, function (bool) {
-          console.log("1");
           if (bool) {
             next();
           } else {
@@ -23,14 +20,10 @@ function certauth(req, res, next) {
         res.status(errors[1402].header).json(errors[1402]);
       }
     } else {
-      console.log("2");
       next();
     }
   } else {
-    console.log("3");
-    console.log(req.headers.name, req.headers.token, req.headers.signature);
     if ((req.headers.name != null || req.headers.name != undefined) && (req.headers.signature != null || req.headers.signature != undefined || req.headers.signature != "")) {
-      console.log("Got in if");
       auth(req, res, function (bool) {
         if (bool) {
           next()
@@ -47,15 +40,12 @@ function certauth(req, res, next) {
 function auth(req, res, cb) {
   let sign = req.headers.signature;
   let name = req.headers.name;
-  //let token = req.headers.token;
   let data
   if (Object.keys(req.body).length === 0) data = { token: req.headers.token }
   else data = req.body
-  //console.log(req.connection.getPeerCertificate());
   //DB get pubkey by name;
   UserModel.findOne({ "Name": name }, function (err, user) {
     if (err)
-      console.log("User not found")
       console.log(err);
     try {
       verifyData(data, sign, user.PublicKey, user.Name, function (result) {
@@ -66,7 +56,6 @@ function auth(req, res, cb) {
         }
       });
     } catch (error) {
-      console.log(error);
       return res.status(errors[1402].header).json(errors[1402]);
     }
   });
