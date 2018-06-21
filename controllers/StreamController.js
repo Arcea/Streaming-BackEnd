@@ -58,6 +58,8 @@ module.exports = {
 			})
 	},
 	Activate(req, res, next) {
+		console.log('STREAM ID '+req.params.streamid)
+		console.log('PORT BODY AND STUFF', req.body)
 		Streams.findByIdAndUpdate(req.params.streamid, { Port: req.body.port, Live: true})
 		.then((doc, err) => {
 			console.log('OMG WHY DOESNT THIS FUCKING WORK ALREADY',err, doc)
