@@ -9,8 +9,6 @@ const assert = chai.assert;
 const app = require("../app");
 chai.use(chaiHttp)
 
-
-
 describe('Token generation', () =>{
 
     // getting a token from the server.

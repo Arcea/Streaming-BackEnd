@@ -31,7 +31,6 @@ module.exports = {
 			})
 	},
 	GetOneByName(req, res, next){
-		console.log(req.params.name)
 		Users.findOne({ Name: req.params.name }).select()
 			.populate("Streams")
 			.then((user, err) => { 
@@ -67,7 +66,6 @@ module.exports = {
 	Deactivate(req, res, next) {
 		Streams.findOneAndUpdate({User: req.params.streamid}, { Port: 0, Live: false })
 		.then((doc, err) => {
-			console.log(doc, err)
 			if(err) return res.send(500, { error: err});
 			return res.send("Saved stream status");
 		});

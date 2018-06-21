@@ -16,7 +16,6 @@ module.exports = {
             else{
                 try {
                     const currentDate = moment().format();
-                    console.log(currentDate)
                     let chatMessage = new chatModel({
                         Content: req.body.content,
                         Date: currentDate,
@@ -32,11 +31,7 @@ module.exports = {
                             res.setHeader("Signature", signData(response))
                             res.status(200).json(response);
                         }
-                    });
-     
-                    // io.to(req.params.id).emit(chatMessage);
-                    // console.log("Emitted message: " + chatMessage.content);
-                    // console.log("Room: " + req.params.id);    
+                    });  
                 } catch (err) { 
                     res.status(errors[1601].header).json(errors[1601]); 
                 } 
@@ -66,10 +61,5 @@ module.exports = {
             .catch(err => {
                 console.log(err)
             });
-            
-            // io.on('connection', function(socket){
-            //     console.log("Joined room: " + req.params.id);
-            //     socket.join(req.params.id);
-            // });
     }
 }
