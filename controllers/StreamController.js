@@ -60,7 +60,7 @@ module.exports = {
 	Activate(req, res, next) {
 		console.log('STREAM ID '+req.params.streamid)
 		console.log('PORT BODY AND STUFF', req.body)
-		Streams.findByIdAndUpdate(req.params.streamid, { Port: req.body.port, Live: true})
+		Streams.findOneAndUpdate({User: req.params.streamid}, { Port: req.body.port, Live: true})
 		.then((doc, err) => {
 			console.log('OMG WHY DOESNT THIS FUCKING WORK ALREADY',err, doc)
 			if(err) return res.send(500, { error: err});
@@ -69,7 +69,7 @@ module.exports = {
 		});
 	},
 	Deactivate(req, res, next) {
-		Streams.findByIdAndUpdate(req.params.streamid, { Port: 0, Live: false })
+		Streams.findOneAndUpdate({User: req.params.streamid}, { Port: 0, Live: false })
 		.then((doc, err) => {
 			console.log('OMG WHY DOESNT THIS FUCKING WORK ALREADY',err, doc)
 			if(err) return res.send(500, { error: err});
