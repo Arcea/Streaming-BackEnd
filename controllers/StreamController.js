@@ -59,6 +59,7 @@ module.exports = {
 	},
 	Activate(req, res, next) {
 		Streams.findAndUpdate({_id: req.params.streamid}, { Port: req.body.port, Live: true}, function(doc, err){
+			console.log(err)
 			if(err) return res.send(500, { error: err});
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+doc)
 			return res.send("Saved stream status");
