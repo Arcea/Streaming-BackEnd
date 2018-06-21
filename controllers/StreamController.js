@@ -67,6 +67,7 @@ module.exports = {
 	Deactivate(req, res, next) {
 		Streams.findOneAndUpdate({User: req.params.streamid}, { Port: 0, Live: false })
 		.then((doc, err) => {
+			console.log(doc, err)
 			if(err) return res.send(500, { error: err});
 			return res.send("Saved stream status");
 		});
