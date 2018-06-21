@@ -58,14 +58,15 @@ module.exports = {
 			})
 	},
 	Activate(req, res, next) {
-		Streams.findByIdAndUpdate(req.params.streamid, { Port: req.body.port, Live: true}, function(err, doc){
+		console.log(';AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL',req.params.streamid )
+		Streams.findAndUpdate({_id: req.params.streamid}, { Port: req.body.port, Live: true}, function(err, doc){
 			if(err) return res.send(500, { error: err});
 			console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'+doc)
 			return res.send("Saved stream status");
 		});
 	},
 	Deactivate(req, res, next) {
-		Streams.findByIdAndUpdate(req.params.streamid, { Port: 0, Live: false }, function(err, doc){
+		Streams.findAndUpdate({_id: req.params.streamid}, { Port: 0, Live: false }, function(err, doc){
 			if(err) return res.send(500, { error: err});
 			return res.send("Saved stream status");
 		});
