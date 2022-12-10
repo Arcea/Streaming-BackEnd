@@ -10,11 +10,11 @@
     "startmon": "nodemon ."
   },
   "dependencies": {
-    "body-parser": "~1.18.2",
+    "body-parser": "~1.20.1",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+    "express": "^4.18.2",
     "missing": "0.0.1",
     "moment": "^2.22.2",
     "mongoose": "^5.1.4",
